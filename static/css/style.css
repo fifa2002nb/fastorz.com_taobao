@@ -1,0 +1,93 @@
+.deckgrid[deckgrid]::before {
+    /* Specifies that the grid should have a maximum of 4 columns. Each column will have the classes 'column' and 'column-1-4' */
+    content: '2 .column.column-1-2';
+    font-size: 0; /* See https://github.com/akoenig/angular-deckgrid/issues/14#issuecomment-35728861 */
+    visibility: hidden;
+}
+
+.deckgrid .column {
+    float: left;
+}
+
+.deckgrid .column-1-2 {
+    width: 50%;
+    padding: 4px;
+}
+
+.deckgrid .list-group {
+    margin-bottom: 0px;}
+
+.deckgrid .list-group>li:first-child {
+	padding-left: 5;
+	background-color: #fff
+}
+
+.deckgrid .list-group>li:first-child img {
+	width: 100%;
+	border-top-right-radius: 4px;
+	border-top-left-radius: 4px
+}
+
+.content {
+    background: #f6f4f4;
+}
+.img-container {
+    background-color: #FFFFFF;}
+ul.list {
+    padding: 4px 0px 5px 0px;}
+    ul.list li {
+        color: #FFFFFF;
+        text-align: center;
+        width: 100%;}
+        ul.list li .img-container > img {
+            display: block;
+            width: 100%;}
+
+.bottom-panel {
+    background-color: #FFFFFF;
+    padding: 5px;}
+    .bottom-panel .quan-btn {
+        width: 80%;
+        background: #eb4e53;
+        border: 1px solid #fff;
+        color: #fff;
+        border-radius: 5px;
+        font-size: 15px;}
+
+.spotlite-name {
+    padding-bottom: 5px;
+    text-align: justify;}
+    .spotlite-name > .name {
+        font-size: 16px;
+        color: #999;}
+    .spotlite-name > .name > .tmall-icon {
+        float: left;
+        padding-right: 2px;}
+.sell-price {
+    padding-bottom: 5px;
+    text-align: justify;}
+    .sell-price > .item-market-price {
+        float: left;
+        color: #999;
+        text-decoration: line-through;
+        padding-right: 5px;}
+    .sell-price > .item-discount-price {
+        color: #F06000;}
+    .sell-price > .item-save-price {
+        color: #F06000;
+        padding-left: 1px;}
+    .sell-price > .mail-icon {
+        float: left;
+        background: #8bc34a;
+        color: #fff;
+        border-radius: 5px;}
+    .sell-price > .item-sell-num {
+        color: #4a4a4a;
+        padding-left: 10px;}
+
+.taobao-header {
+    margin: 10px 10px 1px 10px;
+}
+.list-item-img {
+    width: 100%;
+}

@@ -1,0 +1,111 @@
+#brew upgrade node
+
+1、npm init
+2、npm install grunt --save-dev
+
+#npm install grunt-cli -g
+
+3、npm install grunt-init -g
+
+#git clone https://github.com/gruntjs/grunt-init-gruntfile.git ~/.grunt-init/gruntfile
+
+4、grunt-init gruntfile
+5、npm install
+
+#npm install bower -g
+
+6、bower init
+
+#bower install requirejs --save
+#bower install jquery --save
+#bower install angularjs --save
+
+7、 npm install grunt-bower-task --save-dev
+    npm install grunt-css --save-dev
+
+8、添加下面内容到Gruntfile
+grunt.loadNpmTasks('grunt-bower-task');
+
+bower: {
+    install: {
+        options: {
+            targetDir: './static/js/lib',
+            layout: 'byComponent',
+            install: true,
+            verbose: false,
+            cleanTargetDir: false,
+            cleanBowerDir: false,
+            bowerOptions: {}
+        }
+    }
+}
+
+9、配置css/js压缩合并
+grunt.loadNpmTasks('grunt-css');
+grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify', 'cssmin']);
+
+    concat: {
+      options: {
+        banner: '<%= banner %>',
+        stripBanners: true
+      },
+      dist: {
+        src: [
+            'static/js/lib/jquery/jquery.js',
+            'static/js/lib/angular/angular.js',
+            'static/js/lib/angular-deckgrid/angular-deckgrid.js',
+            'static/js/lib/angular-resource/angular-resource.js',
+            'static/js/lib/bootstrap/bootstrap.js',
+            'static/js/waterfall.js'
+        ],
+        dest: 'dist/app.js'
+      },
+      css: {
+        src: [
+            'static/css/index.css',
+            'static/css/bootstrap.css'
+        ],
+        dest: 'dist/app.css'
+      }
+    },
+    cssmin: {
+        css: {
+            src: 'dist/app.css',
+            dest: 'dist/app.min.css'
+        }
+    },
+    uglify: {
+      options: {
+        banner: '<%= banner %>'
+      },
+      dist: {
+        src: 'dist/app.js',
+        dest: 'dist/app.min.js'
+      }
+    },
+
+#bower install requirejs
+
+10、创建index.html放到public/index.html
+<html>
+<head>
+    <script src="/public/js/lib/requirejs/require.js" data-main="/public/js/config.js"></script>
+</head>
+<body>
+    <div>Hello, world!</div>
+</body>
+</html>
+
+11、bower install {{*.js}}
+
+12、grunt bower
+使用grunt自动把bower下载的js库拷贝到 public/js/lib 下
+
+13、压缩合并js/css（测试）
+grunt --force
+
+14、python -m SimpleHTTPServer
+#url: http://localhost:8000/public/index.html
+
+15、typescript的各种库*.d.ts安装
+example: tsd install angular

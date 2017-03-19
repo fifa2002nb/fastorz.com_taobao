@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="FastORZ">
+
+<head>
+    <title>{{'fastorz'|translate}}</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS App -->
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/ionic/ionic.css">
+</head>
+
+<body ng-controller="FastORZCtrl">
+    <ui-view/>
+    <!-- Javascript Libs -->
+    <script type="text/javascript" src="/static/js/lib/jquery/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-sanitize/angular-sanitize.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-animate/angular-animate.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-ui-router/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-translate/angular-translate.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script type="text/javascript" src="/static/js/lib/ionic/ionic.js"></script>
+    <script type="text/javascript" src="/static/js/lib/ionic/ionic-angular.js"></script>
+    <script type="text/javascript" src="/static/js/lib/angular-deckgrid/angular-deckgrid.js"></script>
+    <script type="text/javascript" src="/static/js/fastorz.js"></script>
+
+    <script id="show.html" type="text/ng-template">
+    <body>
+        <ion-content>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="text" placeholder="输入关键词搜索">
+                 </label>
+            </div>
+            <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+            </ion-refresher>
+            <div deckgrid class="deckgrid" source="items" cardTemplateString='
+                <ul class="">
+                    <li class="eslite-border">
+                        <a href="" ui-sref="peopleDetail({peopleID: card.ID})">
+                            <div class="img-container">
+                                <img ng-src="{{card.Imgs.Image}}" data-ng-src="" />
+                            </div>
+                            <div class="bottom-panel">
+                                <div class="spotlite-name">
+                                    <a class="name">{{card.Title}}</a>
+                                </div>
+                                <div class="info">
+                                    {{card.Describtion}}
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>'
+            ></div>
+            <ion-infinite-scroll on-infinite="loadMore();" ng-if="!noMoreData">
+            </ion-infinite-scroll>
+        </ion-content>
+    </body>
+    </script>
+</body>
+</html>
