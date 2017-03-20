@@ -16,20 +16,20 @@ var fastorz = angular.module('FastORZ', [
 var GLOBAL_CONFIG = (function () {
     function GLOBAL_CONFIG() {
     }
-    // for online
-    GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
-    GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
-    GLOBAL_CONFIG.onlineCMSBase = 'http://www.apmbe.com:9000/';
-    // for offline
-    GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
-    GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
-    GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
-    // for now
-    GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.offlineRouteUrlBase;
-    GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.offlineTemplateUrlBase;
-    GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.offlineCMSBase;
     return GLOBAL_CONFIG;
 }());
+// for online
+GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
+GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
+GLOBAL_CONFIG.onlineCMSBase = 'http://www.apmbe.com:9000/';
+// for offline
+GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
+GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
+GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
+// for now
+GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.offlineRouteUrlBase;
+GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.offlineTemplateUrlBase;
+GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.offlineCMSBase;
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider, $httpProvider) {
         $locationProvider.html5Mode({ enabled: true, requireBase: false }); //html5 mode
         $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase + 'show/'); // for path rewriter
@@ -168,7 +168,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
             return;
             /*$scope.noMoreData = false;
             $scope.search.searching = true;
-            $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "api/peoples.json?scopes=True&page=1")
+            $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "api/products.json?scopes=True&page=1")
                 .then((items: showItem[]) => {
                     if(20 > items.length) $scope.noMoreData = true;
                     $scope.items = [];
@@ -195,7 +195,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
             /*
             $scope.noMoreData = false;
             $scope.base++;
-            $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "api/peoples.json?scopes=True&page=" + $scope.base)
+            $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "api/products.json?scopes=True&page=" + $scope.base)
                 .then((items: showItem[]) => {
                     if(20 > items.length) $scope.noMoreData = true;
                     for(var i = 0; i < items.length; i++ ){
