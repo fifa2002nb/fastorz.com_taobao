@@ -3,7 +3,7 @@
 
 <head>
     <title>{{'fastorz'|translate}}</title>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- CSS App -->
     <link rel="stylesheet" type="text/css" href="/static/css/app.min.css">
 </head>
@@ -13,36 +13,50 @@
     <!-- Javascript Libs -->
     <script type="text/javascript" src="/static/js/app.min.js"></script>
     <script id="show.html" type="text/ng-template">
-    <body>
-        <ion-content>
-            <div class="list list-inset">
-                <label class="item item-input">
-                    <i class="icon ion-search placeholder-icon"></i>
-                    <input type="text" placeholder="Search">
-                 </label>
+        <ion-content class="content">
+            <div ng-if="search.searching" style="text-align: center;padding-top: 10px;">
+                <ion-spinner ng-if="search.searching" icon="android"></ion-spinner>
             </div>
-            <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+            <div class="taobao-header">
+                <div class="list">
+                    <label class="item item-input">
+                        <i class="icon ion-search placeholder-icon"></i>
+                        <input type="text" placeholder="输入关键词搜索" ng-model="search.searchKey" ng-enter="doRefresh()">
+                     </label>
+                </div>
+            </div>
+            <ion-refresher pulling-text="下拉更新..." on-refresh="doRefresh()">
             </ion-refresher>
             <div deckgrid class="deckgrid" source="items" cardTemplateString='
-                <ul class="">
+                <ul class="list">
                     <li class="eslite-border">
-                        <a href="" ui-sref="peopleDetail({peopleID: card.ID})">
-                            <div class="img-container">
-                                <img ng-src="{{card.Imgs.Image}}" data-ng-src="" />
-                            </div>
-                            <div class="bottom-panel">
-                                <div class="spotlite-name">
-                                    <a class="name">{{card.Title}}</a>
-                                </div>
-                                <div class="info">
-                                    {{card.Describtion}}
+                        <div class="img-container">
+                            <img class="list-item-img" ng-src="{{card.image}}" data-ng-src="" />
+                        </div>
+                        <div class="bottom-panel">
+                            <div class="spotlite-name">
+                                <div class="name">
+                                    <img class="tmall-icon" src="http://auz.qnl1.com/open/quan/images/taobao.png">
+                                    <div>{{card.title}}</div>
                                 </div>
                             </div>
-                        </a>
+                            <div class="sell-price">
+                                <span class="item-market-price">￥{{card.market_price}}</span>
+                                <span class="item-discount-price">券后<i>{{card.discount_price}}</i></span>
+                                <span class="item-save-price">优惠<i>{{card.save_price}}</i></span>
+                            </div>
+                            <div class="sell-price">
+                                <span class="mail-icon">包邮</span>
+                                <span class="item-sell-num">销量{{card.sell_num}}</span>
+                            </div>
+                            <button class="quan-btn" ng-click="mother.showPopup()" clipboard text="card.quan"> 
+                                <span class="quan-text-icon">领券购买</span>
+                            </button>
+                        </div>
                     </li>
                 </ul>'
             ></div>
-            <ion-infinite-scroll on-infinite="loadMore();" ng-if="!noMoreData">
+            <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" ng-if="!noMoreData" icon="ion-loading-c" distance="10%">
             </ion-infinite-scroll>
         </ion-content>
     </script>

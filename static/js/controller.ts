@@ -19,15 +19,15 @@ class GLOBAL_CONFIG{
     // for online
     static onlineRouteUrlBase: string = '/static/templates/';
     static onlineTemplateUrlBase: string = '/static/partials/';
-    static onlineCMSBase: string = 'http://www.apmbe.com:9000/';
+    static onlineCMSBase: string = 'http://api.fastorz.com:9000/';
     // for offline
     static offlineRouteUrlBase: string = '/static/templates/';
     static offlineTemplateUrlBase: string = '/static/partials/';
     static offlineCMSBase: string = 'http://127.0.0.1:9000/';
     // for now
-    static nowRouteUrlBase: string = GLOBAL_CONFIG.offlineRouteUrlBase;
-    static nowTemplateUrlBase: string = GLOBAL_CONFIG.offlineTemplateUrlBase;
-    static nowCMSBase: string = GLOBAL_CONFIG.offlineCMSBase;
+    static nowRouteUrlBase: string = GLOBAL_CONFIG.onlineRouteUrlBase;
+    static nowTemplateUrlBase: string = GLOBAL_CONFIG.onlineTemplateUrlBase;
+    static nowCMSBase: string = GLOBAL_CONFIG.onlineCMSBase;
 }
    
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider, $translateProvider: angular.translate.ITranslateProvider, $httpProvider: ng.IHttpProvider){

@@ -44,32 +44,32 @@
                 <ul class="list">
                     <li class="eslite-border">
                         <div class="img-container">
-                            <img class="list-item-img" ng-src="{{card.Image}}" data-ng-src="" />
+                            <img class="list-item-img" ng-src="{{card.image}}" data-ng-src="" />
                         </div>
                         <div class="bottom-panel">
                             <div class="spotlite-name">
                                 <div class="name">
                                     <img class="tmall-icon" src="http://auz.qnl1.com/open/quan/images/taobao.png">
-                                    <div>{{card.Title}}</div>
+                                    <div>{{card.title}}</div>
                                 </div>
                             </div>
                             <div class="sell-price">
-                                <span class="item-market-price">￥{{card.MarketPrice}}</span>
-                                <span class="item-discount-price">券后<i>{{card.DiscountPrice}}</i></span>
-                                <span class="item-save-price">优惠<i>{{card.SavePrice}}</i></span>
+                                <span class="item-market-price">￥{{card.market_price}}</span>
+                                <span class="item-discount-price">券后<i>{{card.discount_price}}</i></span>
+                                <span class="item-save-price">优惠<i>{{card.save_price}}</i></span>
                             </div>
                             <div class="sell-price">
                                 <span class="mail-icon">包邮</span>
-                                <span class="item-sell-num">销量{{card.SellNum}}</span>
+                                <span class="item-sell-num">销量{{card.sell_num}}</span>
                             </div>
-                            <button class="quan-btn" ng-click="mother.showPopup()" clipboard text=card.Quan> 
+                            <button class="quan-btn" ng-click="mother.showPopup()" clipboard text="card.quan"> 
                                 <span class="quan-text-icon">领券购买</span>
                             </button>
                         </div>
                     </li>
                 </ul>'
             ></div>
-            <ion-infinite-scroll on-infinite="loadMore();" ng-if="!noMoreData">
+            <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" ng-if="!noMoreData" icon="ion-loading-c" distance="10%">
             </ion-infinite-scroll>
         </ion-content>
     </script>
