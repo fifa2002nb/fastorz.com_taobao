@@ -14,7 +14,7 @@
     <!-- Javascript Libs -->
     <script type="text/javascript" src="/static/js/lib/jquery/jquery.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular/angular.js"></script>
-    <script type="text/javascript" src="/static/js/lib/angular-clipboard/angular-clipboard.js"></script>
+    <script type="text/javascript" src="/static/js/lib/clipboard/clipboard.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular-sanitize/angular-sanitize.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="/static/js/lib/angular-ui-router/angular-ui-router.js"></script>
@@ -62,7 +62,7 @@
                                 <span class="mail-icon">包邮</span>
                                 <span class="item-sell-num">销量{{card.sell_num}}</span>
                             </div>
-                            <button class="quan-btn" ng-click="mother.showPopup()" clipboard text="card.quan"> 
+                            <button class="quan-btn" ng-click="mother.showPopup()" data-clipboard-action="copy" data-clipboard-text="{{card.quan}}">
                                 <span class="quan-text-icon">领券购买</span>
                             </button>
                         </div>

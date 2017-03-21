@@ -4,13 +4,12 @@
 /// <reference path="typings/angularjs/angular-sanitize.d.ts" />
 /// <reference path="typings/angularjs/angular-animate.d.ts" />
 /// <reference path="typings/ionic/ionic.d.ts" />
-/// <reference path="typings/angular-clipboard/angular-clipboard.d.ts" />
+/// <reference path="typings/clipboard/clipboard.d.ts" />
 var fastorz = angular.module('FastORZ', [
     'ui.router',
     'fastorzControllers',
     'pascalprecht.translate',
     'ionic',
-    'angular-clipboard',
     'akoenig.deckgrid'
 ]);
 var GLOBAL_CONFIG = (function () {
@@ -159,6 +158,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.search = { searchKey: "", searching: false, searchLimit: 20 };
         $scope.base = 0;
         $scope.noMoreData = false;
+        new Clipboard('.quan-btn');
         $scope.doRefresh = function () {
             $scope.noMoreData = false;
             $scope.search.searching = true;

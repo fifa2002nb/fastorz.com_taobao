@@ -23,7 +23,9 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.search = {searchKey: "", searching: false, searchLimit: 20};
     $scope.base = 0;
     $scope.noMoreData = false;
-
+    
+    new Clipboard('.quan-btn');
+    
     $scope.doRefresh = () => {
         $scope.noMoreData = false;
         $scope.search.searching = true;
@@ -47,7 +49,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
                 $scope.search.searching = false;
             });
     }
-
+    
     $scope.loadMore = () => {
         $scope.noMoreData = false;
         var data = {key: $scope.search.searchKey, base: $scope.base, limit: $scope.search.searchLimit};

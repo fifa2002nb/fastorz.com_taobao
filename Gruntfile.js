@@ -41,7 +41,7 @@ module.exports = function(grunt) {
             'static/js/lib/ionic/ionic.js',
             'static/js/lib/ionic/ionic-angular.js',
             'static/js/lib/angular-deckgrid/angular-deckgrid.js',
-            'static/js/lib/angular-clipboard/angular-clipboard.js',
+            'static/js/lib/clipboard/clipboard.js',
             'static/js/fastorz.js'
         ],
         dest: 'dist/static/js/app.js'

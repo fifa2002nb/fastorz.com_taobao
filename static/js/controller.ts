@@ -4,14 +4,13 @@
 /// <reference path="typings/angularjs/angular-sanitize.d.ts" />
 /// <reference path="typings/angularjs/angular-animate.d.ts" />
 /// <reference path="typings/ionic/ionic.d.ts" />
-/// <reference path="typings/angular-clipboard/angular-clipboard.d.ts" />
+/// <reference path="typings/clipboard/clipboard.d.ts" />
 
 var fastorz = angular.module('FastORZ', [
     'ui.router',
     'fastorzControllers',
     'pascalprecht.translate',
     'ionic',
-    'angular-clipboard',
     'akoenig.deckgrid'
     ]);
     
