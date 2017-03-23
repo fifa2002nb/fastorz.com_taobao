@@ -13,7 +13,7 @@ interface IShowScope extends IFastORZScope {
     noMoreData: boolean;
     items: showItem[];
     search: any;
-    doRefresh: () => void;
+    doRefresh: (searching: boolean) => void;
     loadMore: () => void;
     showPopup: () => void;
 }
@@ -26,9 +26,9 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
     
     new Clipboard('.quan-btn');
     
-    $scope.doRefresh = () => {
+    $scope.doRefresh = (searching: boolean) => {
         $scope.noMoreData = false;
-        $scope.search.searching = true;
+        $scope.search.searching = searching;
         $scope.base = 0;
         var data = {key: $scope.search.searchKey, base: $scope.base, limit: $scope.search.searchLimit};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
@@ -87,5 +87,5 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
         });
     }
 
-    $scope.doRefresh();
+    $scope.doRefresh(false);
 }]);

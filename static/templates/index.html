@@ -34,11 +34,11 @@
                 <div class="list">
                     <label class="item item-input">
                         <i class="icon ion-search placeholder-icon"></i>
-                        <input type="text" placeholder="输入关键词搜索" ng-model="search.searchKey" ng-enter="doRefresh()">
+                        <input type="text" placeholder="输入关键词搜索" ng-model="search.searchKey" ng-enter="doRefresh(true)">
                      </label>
                 </div>
             </div>
-            <ion-refresher pulling-text="下拉更新..." on-refresh="doRefresh()">
+            <ion-refresher pulling-text="下拉更新..." on-refresh="doRefresh(false)">
             </ion-refresher>
             <div deckgrid class="deckgrid" source="items" cardTemplateString='
                 <ul class="list">
@@ -69,7 +69,7 @@
                     </li>
                 </ul>'
             ></div>
-            <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" ng-if="!noMoreData" icon="ion-loading-c" distance="10%">
+            <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" ng-if="!noMoreData" icon="ion-load-c" distance="5%">
             </ion-infinite-scroll>
         </ion-content>
     </script>

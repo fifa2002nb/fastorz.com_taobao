@@ -5,6 +5,7 @@ DIST="${ROOT_DIR}/dist"
 DIST_DIR="${ROOT_DIR}/dist/static"
 SRC_DIR="${ROOT_DIR}/static"
 GRUNT_BIN="/usr/local/bin/grunt"
+TIMESTAMP=`date +%Y%m%d%H%M`
 
 `$GRUNT_BIN --force 2>&1`
 
@@ -19,5 +20,6 @@ do
     fi
 done
 
-`mv ${DIST_DIR}/templates/index.html.online ${DIST_DIR}/templates/index.html`
+`sed -e "s/app.min.css/app.min.css?${TIMESTAMP}/g" ${DIST_DIR}/templates/index.html.online|sed -e "s/app.min.js/app.min.js?${TIMESTAMP}/g" > ${DIST_DIR}/templates/index.html && rm -rf ${DIST_DIR}/templates/index.html.online`
+#`mv ${DIST_DIR}/templates/index.html.online ${DIST_DIR}/templates/index.html`
 `cp ${DIST_DIR}/templates/index.html ${DIST_DIR}/templates/show/index.html`
