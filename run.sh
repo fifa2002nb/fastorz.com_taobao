@@ -7,7 +7,7 @@ then
     exit 1
 fi
 
-ROOT_DIR="/Users/miles/dev/go_workspace/dev/frontend/fastorz.com_taobao"
+ROOT_DIR="/Users/yexu/dev/front-backend/fastorz.com_taobao"
 DIST="${ROOT_DIR}/dist"
 DIST_DIR="${ROOT_DIR}/dist/static"
 SRC_DIR="${ROOT_DIR}/static"

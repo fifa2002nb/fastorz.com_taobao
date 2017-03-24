@@ -13,7 +13,7 @@
     <!-- Javascript Libs -->
     <script type="text/javascript" src="/static/js/app.min.js"></script>
     <script id="show.html" type="text/ng-template">
-        <ion-content class="content">
+        <ion-content class="content" lazy-scroll>
             <div ng-if="search.searching" style="text-align: center;padding-top: 10px;">
                 <ion-spinner ng-if="search.searching" icon="android"></ion-spinner>
             </div>
@@ -31,7 +31,7 @@
                 <ul class="list">
                     <li class="eslite-border">
                         <div class="img-container">
-                            <img class="list-item-img" ng-src="{{card.image}}" data-ng-src="" />
+                            <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" image-lazy-src="{{card.image}}"/>
                         </div>
                         <div class="bottom-panel">
                             <div class="spotlite-name">

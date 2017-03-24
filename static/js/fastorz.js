@@ -10,25 +10,26 @@ var fastorz = angular.module('FastORZ', [
     'fastorzControllers',
     'pascalprecht.translate',
     'ionic',
-    'akoenig.deckgrid'
+    'akoenig.deckgrid',
+    'ionicLazyLoad'
 ]);
 var GLOBAL_CONFIG = (function () {
     function GLOBAL_CONFIG() {
     }
+    // for online
+    GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
+    GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
+    GLOBAL_CONFIG.onlineCMSBase = 'http://api.fastorz.com:9000/';
+    // for offline
+    GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
+    GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
+    GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
+    // for now
+    GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.onlineRouteUrlBase;
+    GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.onlineTemplateUrlBase;
+    GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.onlineCMSBase;
     return GLOBAL_CONFIG;
 }());
-// for online
-GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
-GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
-GLOBAL_CONFIG.onlineCMSBase = 'http://api.fastorz.com:9000/';
-// for offline
-GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
-GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
-GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
-// for now
-GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.onlineRouteUrlBase;
-GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.onlineTemplateUrlBase;
-GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.onlineCMSBase;
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider, $httpProvider) {
         $locationProvider.html5Mode({ enabled: true, requireBase: false }); //html5 mode
         $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter

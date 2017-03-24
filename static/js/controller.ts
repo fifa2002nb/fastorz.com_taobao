@@ -11,7 +11,8 @@ var fastorz = angular.module('FastORZ', [
     'fastorzControllers',
     'pascalprecht.translate',
     'ionic',
-    'akoenig.deckgrid'
+    'akoenig.deckgrid',
+    'ionicLazyLoad'
     ]);
     
 class GLOBAL_CONFIG{
