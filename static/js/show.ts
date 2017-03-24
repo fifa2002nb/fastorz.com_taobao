@@ -20,7 +20,7 @@ interface IShowScope extends IFastORZScope {
 
 fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', function($scope: IShowScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService){
     $scope.items = [];
-    $scope.search = {searchKey: "", searching: false, searchLimit: 20};
+    $scope.search = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
     $scope.base = 0;
     $scope.noMoreData = false;
     
@@ -30,7 +30,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.noMoreData = false;
         $scope.search.searching = searching;
         $scope.base = 0;
-        var data = {key: $scope.search.searchKey, base: $scope.base, limit: $scope.search.searchLimit};
+        var data = {key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
             .then((res: any) => {
                 if(0 == res.code) {
@@ -52,7 +52,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
     
     $scope.loadMore = () => {
         $scope.noMoreData = false;
-        var data = {key: $scope.search.searchKey, base: $scope.base, limit: $scope.search.searchLimit};
+        var data = {key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
             .then((res: any) => {
                 if(0 == res.code) {
