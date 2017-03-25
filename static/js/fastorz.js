@@ -159,6 +159,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.search = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
         $scope.base = 0;
         $scope.noMoreData = false;
+        $scope.loading = false;
         new Clipboard('.quan-btn');
         $scope.doRefresh = function (searching) {
             if (!searching) {
@@ -188,6 +189,10 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
             });
         };
         $scope.loadMore = function () {
+            if ($scope.loading) {
+                return;
+            }
+            $scope.loading = true;
             $scope.noMoreData = false;
             var data = { key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit };
             $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
@@ -201,8 +206,10 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
                     }
                 }
                 $scope.base++;
+                $scope.loading = false;
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             }, function (err) {
+                $scope.loading = false;
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             });
         };

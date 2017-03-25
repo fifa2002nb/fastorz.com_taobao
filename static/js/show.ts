@@ -16,6 +16,7 @@ interface IShowScope extends IFastORZScope {
     doRefresh: (searching: boolean) => void;
     loadMore: () => void;
     showPopup: () => void;
+    loading: boolean;
 }
 
 fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', function($scope: IShowScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService){
@@ -23,6 +24,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.search = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
     $scope.base = 0;
     $scope.noMoreData = false;
+    $scope.loading = false;
     
     new Clipboard('.quan-btn');
     
@@ -54,6 +56,10 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
     }
     
     $scope.loadMore = () => {
+        if($scope.loading) { //保证只有一个在loading
+            return;
+        }
+        $scope.loading = true; 
         $scope.noMoreData = false;
         var data = {key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
@@ -67,8 +73,10 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
                     }
                 }
                 $scope.base++;
+                $scope.loading = false;
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             }, (err: any) => {
+                $scope.loading = false;
                 $scope.$broadcast("scroll.infiniteScrollComplete")
             });
     }
