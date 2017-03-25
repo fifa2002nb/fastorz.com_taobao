@@ -16,16 +16,14 @@ interface IShowScope extends IFastORZScope {
     doRefresh: (searching: boolean) => void;
     loadMore: () => void;
     showPopup: () => void;
-    loading: boolean;
 }
 
 fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', function($scope: IShowScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService){
     $scope.items = [];
-    $scope.search = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
+    $scope.search = {searchKey: "", searching: false, searchLimit: 10, searchType: Math.round(Math.random() * 30)};
     $scope.base = 0;
     $scope.noMoreData = false;
-    $scope.loading = false;
-    
+
     new Clipboard('.quan-btn');
     
     $scope.doRefresh = (searching: boolean) => {
@@ -40,7 +38,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
             .then((res: any) => {
                 if(0 == res.code) {
                     $scope.items = res.result;
-                    if(20 > $scope.items.length) {
+                    if($scope.search.searchLimit > $scope.items.length) {
                         $scope.noMoreData = true;
                     }
                 } else {
@@ -56,16 +54,12 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
     }
     
     $scope.loadMore = () => {
-        if($scope.loading) { //保证只有一个在loading
-            return;
-        }
-        $scope.loading = true; 
         $scope.noMoreData = false;
         var data = {key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
             .then((res: any) => {
                 if(0 == res.code) {
-                    if(20 > res.result.length) {
+                    if($scope.search.searchLimit > res.result.length) {
                         $scope.noMoreData = true;
                     }
                     for(var i = 0; i < res.result.length; i++) {
@@ -73,10 +67,8 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
                     }
                 }
                 $scope.base++;
-                $scope.loading = false;
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             }, (err: any) => {
-                $scope.loading = false;
                 $scope.$broadcast("scroll.infiniteScrollComplete")
             });
     }
