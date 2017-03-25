@@ -27,6 +27,9 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
     new Clipboard('.quan-btn');
     
     $scope.doRefresh = (searching: boolean) => {
+        if(!searching) {
+            $scope.search.searchType = Math.round(Math.random() * 30);
+        }
         $scope.noMoreData = false;
         $scope.search.searching = searching;
         $scope.base = 0;
