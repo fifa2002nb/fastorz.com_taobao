@@ -6,7 +6,7 @@
     }
 }
 
-@media screen and (max-width: 991px){
+@media screen and (max-width: 1199px){
     .deckgrid[deckgrid]::before {
         content: '4 .column.column-1-4';
         font-size: 0; /* See https://github.com/akoenig/angular-deckgrid/issues/14#issuecomment-35728861 */
