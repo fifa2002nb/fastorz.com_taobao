@@ -9,21 +9,29 @@ class showItem {
 }
 
 interface IShowScope extends IFastORZScope {
+    deviceType: string;
     base: number;
     noMoreData: boolean;
     items: showItem[];
     search: any;
     doRefresh: (searching: boolean) => void;
     loadMore: () => void;
-    showPopup: () => void;
+    showPopup: (quan: string) => void;
 }
 
-fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', function($scope: IShowScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService){
+fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function($scope: IShowScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService){
     $scope.items = [];
     $scope.search = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
     $scope.base = 0;
     $scope.noMoreData = false;
-
+    
+    if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
+        $scope.deviceType = "ios";
+    } else if (/(Android)/i.test($window.navigator.userAgent)) {
+        $scope.deviceType = "android";
+    } else {
+        $scope.deviceType = "pc";
+    };
     new Clipboard('.quan-btn');
     
     $scope.doRefresh = (searching: boolean) => {
@@ -33,7 +41,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.noMoreData = false;
         $scope.search.searching = searching;
         $scope.base = 0;
-        var data = {key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit};
+        var data = {key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit, device: $scope.deviceType};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
             .then((res: any) => {
                 if(0 == res.code) {
@@ -55,7 +63,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
     
     $scope.loadMore = () => {
         $scope.noMoreData = false;
-        var data = {key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit};
+        var data = {key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit, device: $scope.deviceType};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
             .then((res: any) => {
                 if(0 == res.code) {
@@ -73,21 +81,25 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
             });
     }
     
-    $scope.showPopup = function() {
-        var myPopup = $ionicPopup.show({
-            template: '<div style="text-align: center;">请打开手机淘宝APP领券下单。</div>',
-            title: '已复制淘口令',
-            scope: $scope,
-            buttons: [
-                {
-                    text: '<b>知道了</b>',
-                    type: 'button-stable',
-                }
-            ]
-        });
-        myPopup.then(function(res) {
-            console.log('Tapped!', res);
-        });
+    $scope.showPopup = (quan: string) => {
+        if("pc" != $scope.deviceType) {
+            var myPopup = $ionicPopup.show({
+                template: '<div style="text-align: center;">请打开手机淘宝APP领券下单。</div>',
+                title: '已复制淘口令',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>知道了</b>',
+                        type: 'button-stable',
+                    }
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+                });
+        } else {
+            $window.open(quan);
+        }
     }
 
     $scope.doRefresh(false);

@@ -16,20 +16,20 @@ var fastorz = angular.module('FastORZ', [
 var GLOBAL_CONFIG = (function () {
     function GLOBAL_CONFIG() {
     }
+    // for online
+    GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
+    GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
+    GLOBAL_CONFIG.onlineCMSBase = 'http://api.fastorz.com:9000/';
+    // for offline
+    GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
+    GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
+    GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
+    // for now
+    GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.offlineRouteUrlBase;
+    GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.offlineTemplateUrlBase;
+    GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.offlineCMSBase;
     return GLOBAL_CONFIG;
 }());
-// for online
-GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
-GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
-GLOBAL_CONFIG.onlineCMSBase = 'http://api.fastorz.com:9000/';
-// for offline
-GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
-GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
-GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
-// for now
-GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.onlineRouteUrlBase;
-GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.onlineTemplateUrlBase;
-GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.onlineCMSBase;
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider, $httpProvider) {
         $locationProvider.html5Mode({ enabled: true, requireBase: false }); //html5 mode
         $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
@@ -154,11 +154,21 @@ var showItem = (function () {
     }
     return showItem;
 }());
-fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', function ($scope, $state, $timeout, $sce, $q, $http, $ionicPopup) {
+fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function ($scope, $state, $timeout, $sce, $q, $http, $ionicPopup, $window) {
         $scope.items = [];
         $scope.search = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
         $scope.base = 0;
         $scope.noMoreData = false;
+        if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
+            $scope.deviceType = "ios";
+        }
+        else if (/(Android)/i.test($window.navigator.userAgent)) {
+            $scope.deviceType = "android";
+        }
+        else {
+            $scope.deviceType = "pc";
+        }
+        ;
         new Clipboard('.quan-btn');
         $scope.doRefresh = function (searching) {
             if (!searching) {
@@ -167,7 +177,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
             $scope.noMoreData = false;
             $scope.search.searching = searching;
             $scope.base = 0;
-            var data = { key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit };
+            var data = { key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit, device: $scope.deviceType };
             $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
                 .then(function (res) {
                 if (0 == res.code) {
@@ -189,7 +199,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
         };
         $scope.loadMore = function () {
             $scope.noMoreData = false;
-            var data = { key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit };
+            var data = { key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit, device: $scope.deviceType };
             $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
                 .then(function (res) {
                 if (0 == res.code) {
@@ -206,21 +216,26 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             });
         };
-        $scope.showPopup = function () {
-            var myPopup = $ionicPopup.show({
-                template: '<div style="text-align: center;">请打开手机淘宝APP领券下单。</div>',
-                title: '已复制淘口令',
-                scope: $scope,
-                buttons: [
-                    {
-                        text: '<b>知道了</b>',
-                        type: 'button-stable'
-                    }
-                ]
-            });
-            myPopup.then(function (res) {
-                console.log('Tapped!', res);
-            });
+        $scope.showPopup = function (quan) {
+            if ("pc" != $scope.deviceType) {
+                var myPopup = $ionicPopup.show({
+                    template: '<div style="text-align: center;">请打开手机淘宝APP领券下单。</div>',
+                    title: '已复制淘口令',
+                    scope: $scope,
+                    buttons: [
+                        {
+                            text: '<b>知道了</b>',
+                            type: 'button-stable'
+                        }
+                    ]
+                });
+                myPopup.then(function (res) {
+                    console.log('Tapped!', res);
+                });
+            }
+            else {
+                $window.open(quan);
+            }
         };
         $scope.doRefresh(false);
     }]);
