@@ -20,7 +20,7 @@ interface IShowScope extends IFastORZScope {
 
 fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', function($scope: IShowScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService){
     $scope.items = [];
-    $scope.search = {searchKey: "", searching: false, searchLimit: 10, searchType: Math.round(Math.random() * 30)};
+    $scope.search = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
     $scope.base = 0;
     $scope.noMoreData = false;
 
