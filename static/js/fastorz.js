@@ -156,7 +156,7 @@ var showItem = (function () {
 }());
 fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', function ($scope, $state, $timeout, $sce, $q, $http, $ionicPopup) {
         $scope.items = [];
-        $scope.search = { searchKey: "", searching: false, searchLimit: 10, searchType: Math.round(Math.random() * 30) };
+        $scope.search = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
         $scope.base = 0;
         $scope.noMoreData = false;
         new Clipboard('.quan-btn');
