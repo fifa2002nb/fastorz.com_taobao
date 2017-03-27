@@ -237,7 +237,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
                 $window.open(quan);
             }
         };
-        //$scope.doRefresh(false);
+        $scope.doRefresh(false);
     }]);
 fastorz.directive('repeatDone', function () {
     return function (scope, element, attrs) {
