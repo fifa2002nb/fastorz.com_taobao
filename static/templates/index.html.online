@@ -58,7 +58,7 @@
                                 <span class="mail-icon">包邮</span>
                                 <span class="item-sell-num">月销量{{card.sell_num}}</span>
                             </div>
-                            <button class="quan-btn" ng-click="mother.showPopup()" data-clipboard-action="copy" data-clipboard-text="{{card.quan}}">
+                            <button class="quan-btn" ng-click="mother.showPopup(card.quan)" data-clipboard-action="copy" data-clipboard-text="{{card.quan}}">
                                 <span class="quan-text-icon">领券购买</span>
                             </button>
                         </div>
