@@ -17,7 +17,7 @@ var fastorz = angular.module('FastORZ', [
     
 class GLOBAL_CONFIG{
     // for online
-    static onlineRouteUrlBase: string = '/static/templates/';
+    static onlineRouteUrlBase: string = '/';
     static onlineTemplateUrlBase: string = '/static/partials/';
     static onlineCMSBase: string = 'http://api.fastorz.com:9000/';
     // for offline

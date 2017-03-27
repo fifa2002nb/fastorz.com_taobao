@@ -19,7 +19,7 @@ var GLOBAL_CONFIG = (function () {
     return GLOBAL_CONFIG;
 }());
 // for online
-GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
+GLOBAL_CONFIG.onlineRouteUrlBase = '/';
 GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
 GLOBAL_CONFIG.onlineCMSBase = 'http://api.fastorz.com:9000/';
 // for offline
@@ -159,6 +159,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.search = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
         $scope.base = 0;
         $scope.noMoreData = false;
+        $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png";
         if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
             $scope.deviceType = "ios";
         }
