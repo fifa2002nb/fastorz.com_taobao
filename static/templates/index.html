@@ -34,54 +34,5 @@
     <script type="text/javascript" src="/static/js/lib/angular-deckgrid/angular-deckgrid.js"></script>
     <script type="text/javascript" src="/static/js/lib/ionic-image-lazy-load/ionic-image-lazy-load.js"></script>
     <script type="text/javascript" src="/static/js/fastorz.js"></script>
-
-    <script id="show.html" type="text/ng-template">
-        <ion-content class="content" lazy-scroll>
-            <div ng-if="search.searching" style="text-align: center;padding-top: 10px;">
-                <ion-spinner ng-if="search.searching" icon="ios"></ion-spinner>
-            </div>
-            <div class="taobao-header">
-                <div class="list">
-                    <label class="item item-input">
-                        <i class="icon ion-search placeholder-icon"></i>
-                        <input type="text" placeholder="输入关键词搜索" ng-model="search.searchKey" ng-enter="doRefresh(true)">
-                     </label>
-                </div>
-            </div>
-            <ion-refresher pulling-text="下拉更新..." on-refresh="doRefresh(false)">
-            </ion-refresher>
-            <div deckgrid class="deckgrid" source="items" cardTemplateString='
-                <ul class="list">
-                    <li class="eslite-border">
-                        <div class="img-container">
-                            <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" image-lazy-src="{{card.image}}" image-lazy-distance-from-bottom-to-load="200"/>
-                        </div>
-                        <div class="bottom-panel">
-                            <div class="spotlite-name">
-                                <div class="name">
-                                    <img class="tmall-icon" src="http://auz.qnl1.com/open/quan/images/taobao.png">
-                                    <div>{{card.title}}</div>
-                                </div>
-                            </div>
-                            <div class="sell-price">
-                                <span class="item-market-price">￥{{card.market_price}}</span>
-                                <span class="item-discount-price">券后<i>{{card.discount_price}}</i></span>
-                                <span class="item-save-price">优惠<i>{{card.save_price}}</i></span>
-                            </div>
-                            <div class="sell-price">
-                                <span class="mail-icon">包邮</span>
-                                <span class="item-sell-num">月销量{{card.sell_num}}</span>
-                            </div>
-                            <button class="quan-btn" ng-click="mother.showPopup(card.quan)" data-clipboard-action="copy" data-clipboard-text="{{card.quan}}">
-                                <span class="quan-text-icon">领券购买</span>
-                            </button>
-                        </div>
-                    </li>
-                </ul>'
-            ></div>
-            <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" ng-if="!noMoreData" icon="ion-load-d" distance="1%">
-            </ion-infinite-scroll>
-        </ion-content>
-    </script>
 </body>
 </html>

@@ -3559,7 +3559,7 @@ ion-infinite-scroll {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #f6f4f4;
   overflow: hidden; }
 
 .view-container {
@@ -4357,7 +4357,7 @@ a.subdued {
     color: #f8f8f8; }
   @media (min--moz-device-pixel-ratio: 1.5), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     .tabs {
-      padding-top: 2px;
+      padding-top: 0px;
       border-top: none !important;
       border-bottom: none;
       background-position: top;
@@ -4390,7 +4390,6 @@ a.subdued {
 .tabs-positive > .tabs,
 .tabs.tabs-positive {
   background-color: #E6E6E6;
-  background-image: linear-gradient(0deg, #0c60ee, #0c60ee 50%, transparent 50%);
   color: #fff; }
   .tabs-positive > .tabs .tab-item .badge,
   .tabs.tabs-positive .tab-item .badge {
@@ -5057,7 +5056,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
   flex: 1;
   display: block;
   overflow: hidden;
-  background-color: #696057;
+  background-color: #eb4e53;
   height: 100%;
   color: inherit;
   text-align: center;
@@ -5085,7 +5084,6 @@ ion-tabs.tabs-color-active-dark .tab-item {
   line-height: 14px; }
 
 .tab-item .icon {
-  height: 60%;
   width: 100%;
   display: block;
   background-size: contain;

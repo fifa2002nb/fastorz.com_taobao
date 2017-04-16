@@ -1,0 +1,150 @@
+<ion-tabs class="tabs-positive tabs-icon-only">
+    <ion-tab title="每日精选">
+        <ion-content lazy-scroll>
+            <div ng-if="search.searching" style="text-align: center;padding-top: 10px;">
+                <ion-spinner ng-if="search.searching" icon="ios"></ion-spinner>
+            </div>
+            <div class="taobao-header">
+                <div class="list">
+                    <label class="item item-input">
+                        <i class="icon ion-search placeholder-icon"></i>
+                        <input type="text" placeholder="输入关键词搜索" ng-model="search.searchKey" ng-enter="doRefresh(true)">
+                     </label>
+                </div>
+            </div>
+            <ion-refresher pulling-text="下拉更新..." on-refresh="doRefresh(false)">
+            </ion-refresher>
+            <div deckgrid class="deckgrid" source="items" cardTemplateString='
+                <ul class="list">
+                    <li class="eslite-border">
+                        <div class="img-container">
+                            <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" image-lazy-src="{{card.image}}" image-lazy-distance-from-bottom-to-load="200"/>
+                        </div>
+                        <div class="bottom-panel">
+                            <div class="spotlite-name">
+                                <div class="name">
+                                    <img class="tmall-icon" src="http://auz.qnl1.com/open/quan/images/taobao.png">
+                                    {{card.title}}
+                                </div>
+                            </div>
+                            <div class="sell-price">
+                                <span class="item-market-price">￥{{card.market_price}}</span>
+                                <span class="item-discount-price">券后<i>{{card.discount_price}}</i></span>
+                                <span class="item-save-price">优惠<i>{{card.save_price}}</i></span>
+                            </div>
+                            <div class="sell-price">
+                                <span class="mail-icon">包邮</span>
+                                <span class="item-sell-num">月销量{{card.sell_num}}</span>
+                            </div>
+                            <button class="quan-btn" ng-click="mother.showPopup(card.quan)" data-clipboard-action="copy" data-clipboard-text="{{card.quan}}">
+                                <span class="quan-text-icon">领券购买</span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>'
+            ></div>
+            <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" ng-if="!noMoreData" icon="ion-load-d" distance="1%">
+            </ion-infinite-scroll>
+        </ion-content>    
+    </ion-tab>
+    <ion-tab title="达人潮玩">
+        <ion-content lazy-scroll ng-show="!daren.showDetal">
+            <div ng-if="search.searching" style="text-align: center;padding-top: 10px;">
+                <ion-spinner ng-if="search.searching" icon="ios"></ion-spinner>
+            </div>
+            <div class="taobao-header">
+                <div class="list">
+                    <label class="item item-input">
+                        <i class="icon ion-search placeholder-icon"></i>
+                        <input type="text" placeholder="输入关键词搜索" ng-model="search.searchKey" ng-enter="doRefresh(true)">
+                     </label>
+                </div>
+            </div>
+            <ion-refresher pulling-text="下拉更新..." on-refresh="doRefresh(false)">
+            </ion-refresher>
+            <div deckgrid class="deckgrid" source="items" cardTemplateString='
+                <ul class="list">
+                    <li class="eslite-border" ng-click="mother.jump2darenDetail()">
+                        <div class="img-container">
+                            <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" image-lazy-src="{{card.image}}" image-lazy-distance-from-bottom-to-load="200"/>
+                        </div>
+                        <div class="bottom-panel">
+                            <div class="spotlite-name">
+                                <div class="name">
+                                    {{card.title}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>'
+            ></div>
+            <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" ng-if="!noMoreData" icon="ion-load-d" distance="1%">
+            </ion-infinite-scroll>
+        </ion-content>    
+        <ion-header-bar ng-if="daren.showDetal">
+            <div class="buttons">
+                <button class="button button-icon icon ion-ios-minus-outline"
+                        ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
+            </div>
+            <h1 class="title">达人详情</h1>
+            <div class="buttons">
+                <button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
+                    Reorder
+                </button>
+            </div>
+        </ion-header-bar>
+        <ion-content ng-show="daren.showDetal" style="padding-top: 47px; padding-left: 4px; padding-right: 4px; padding-bottom: 4px;">
+            <ion-list>
+                <a class="item item-avatar item-icon-right" ng-click="goDetails()">
+                    <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" style="width:50%; height:50%;"/>
+                    <h2><span>公公公愚</span></h2>
+                    <p>积分：<span>996</span></p>
+                    <i class="icon ion-ios-arrow-right"></i>
+                </a> 
+            </ion-list>
+        </ion-content>
+
+    </ion-tab>
+    <ion-tab title="个人中心">
+        <ion-header-bar>
+            <h1 class="title">个人中心</h1>
+        </ion-header-bar>
+        <ion-content class="content" style="padding: 4px;">
+            <ion-refresher pulling-text="下拉更新..." on-refresh="doRefresh(false)">
+            </ion-refresher>
+            <ion-list>
+                <a class="item item-avatar item-icon-right" ng-click="goDetails()">
+                    <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" style="width:50%; height:50%;"/>
+                    <h2><span>公公公愚</span></h2>
+                    <p>积分：<span>996</span></p>
+                    <i class="icon ion-ios-arrow-right"></i>
+                </a> 
+                <div class="item item-icon-right">
+                    <span>积分详情</span>
+                    <i class="icon ion-ios-arrow-right"></i>
+                </div>
+                <ion-item>
+                    邮箱 
+                    <span class="item-note">xysmiracle@hotmail.com</span>
+                </ion-item>
+                <ion-item>
+                    微信 
+                    <span class="item-note">xysmiracle</span>
+                </ion-item>
+                <ion-item>
+                    账户 
+                    <span class="item-note">fifa2002nb</span>
+                </ion-item>
+                <ion-item>
+                    联系作者
+                    <span class="item-note">微信订阅号：fastorz</span>
+                </ion-item>
+                <ion-item class="text-center">
+                    <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" style="width:50%; height:50%;"/>
+                    <br> @www.sodeyixia.com
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-tab>
+</ion-tabs>
+

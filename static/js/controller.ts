@@ -19,7 +19,7 @@ class GLOBAL_CONFIG{
     // for online
     static onlineRouteUrlBase: string = '/static/templates/';
     static onlineTemplateUrlBase: string = '/static/partials/';
-    static onlineCMSBase: string = 'http://api.fastorz.com:9000/';
+    static onlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
     // for offline
     static offlineRouteUrlBase: string = '/static/templates/';
     static offlineTemplateUrlBase: string = '/static/partials/';
@@ -34,13 +34,13 @@ fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$t
     $locationProvider.html5Mode({enabled: true, requireBase: false}); //html5 mode
     $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
     $stateProvider.
-        state('show', {
+        state('sodeyixia', {
             url: GLOBAL_CONFIG.nowRouteUrlBase,              
-            templateUrl: 'show.html',
-            controller: 'ShowCtrl',
             data: {
-                title: 'Show',
-            }
+                title: 'sodeyixia',
+            }, 
+            templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'base.html',
+            controller: 'BaseCtrl',
         });
 
     //设置国际化相关配置

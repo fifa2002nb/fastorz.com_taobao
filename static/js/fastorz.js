@@ -19,7 +19,7 @@ var GLOBAL_CONFIG = (function () {
     // for online
     GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
     GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
-    GLOBAL_CONFIG.onlineCMSBase = 'http://api.fastorz.com:9000/';
+    GLOBAL_CONFIG.onlineCMSBase = 'http://www.sodeyixia.xyz:9000/';
     // for offline
     GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
     GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
@@ -34,13 +34,13 @@ fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$t
         $locationProvider.html5Mode({ enabled: true, requireBase: false }); //html5 mode
         $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
         $stateProvider.
-            state('show', {
+            state('sodeyixia', {
             url: GLOBAL_CONFIG.nowRouteUrlBase,
-            templateUrl: 'show.html',
-            controller: 'ShowCtrl',
             data: {
-                title: 'Show'
-            }
+                title: 'sodeyixia'
+            },
+            templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'base.html',
+            controller: 'BaseCtrl'
         });
         //设置国际化相关配置
         var lang = 'en';
@@ -149,16 +149,17 @@ function getUser() {
 function setUser(name) {
     createCookie('action-user', name, 1000);
 }
-var showItem = (function () {
-    function showItem() {
+var baseItem = (function () {
+    function baseItem() {
     }
-    return showItem;
+    return baseItem;
 }());
-fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function ($scope, $state, $timeout, $sce, $q, $http, $ionicPopup, $window) {
+fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function ($scope, $state, $timeout, $sce, $q, $http, $ionicPopup, $window) {
         $scope.items = [];
         $scope.search = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
         $scope.base = 0;
         $scope.noMoreData = false;
+        $scope.daren = { showDetal: false };
         if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
             $scope.deviceType = "ios";
         }
@@ -219,7 +220,7 @@ fastorzControllers.controller('ShowCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.showPopup = function (quan) {
             if ("pc" != $scope.deviceType) {
                 var myPopup = $ionicPopup.show({
-                    template: '<div style="text-align: center;">请打开手机淘宝APP领券下单。</div>',
+                    template: '<div style="text-align: center;">请打开【手机淘宝APP】领券下单。</div>',
                     title: '已复制淘口令',
                     scope: $scope,
                     buttons: [
