@@ -17,7 +17,7 @@ var fastorz = angular.module('FastORZ', [
     
 class GLOBAL_CONFIG{
     // for online
-    static onlineRouteUrlBase: string = '/static/templates/';
+    static onlineRouteUrlBase: string = '/';
     static onlineTemplateUrlBase: string = '/static/partials/';
     static onlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
     // for offline
@@ -25,9 +25,9 @@ class GLOBAL_CONFIG{
     static offlineTemplateUrlBase: string = '/static/partials/';
     static offlineCMSBase: string = 'http://127.0.0.1:9000/';
     // for now
-    static nowRouteUrlBase: string = GLOBAL_CONFIG.offlineRouteUrlBase;
-    static nowTemplateUrlBase: string = GLOBAL_CONFIG.offlineTemplateUrlBase;
-    static nowCMSBase: string = GLOBAL_CONFIG.offlineCMSBase;
+    static nowRouteUrlBase: string = GLOBAL_CONFIG.onlineRouteUrlBase;
+    static nowTemplateUrlBase: string = GLOBAL_CONFIG.onlineTemplateUrlBase;
+    static nowCMSBase: string = GLOBAL_CONFIG.onlineCMSBase;
 }
    
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider, $translateProvider: angular.translate.ITranslateProvider, $httpProvider: ng.IHttpProvider){

@@ -122,11 +122,10 @@ ul.list {
 
 .spotlite-name {
     padding-bottom: 5px;
-    text-align: justify;}
-    .spotlite-name > .name {
-        font-size: 16px;
-        color: #999;}
-    .spotlite-name > .name > .tmall-icon {
+    text-align: justify;
+    font-size: 16px;
+    color: #999;}
+    .spotlite-name > .tmall-icon {
         float: left;
         padding-right: 2px;}
 .sell-price {

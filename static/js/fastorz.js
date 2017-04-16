@@ -16,6 +16,7 @@ var fastorz = angular.module('FastORZ', [
 var GLOBAL_CONFIG = (function () {
     function GLOBAL_CONFIG() {
     }
+<<<<<<< HEAD
     // for online
     GLOBAL_CONFIG.onlineRouteUrlBase = '/static/templates/';
     GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
@@ -28,8 +29,22 @@ var GLOBAL_CONFIG = (function () {
     GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.offlineRouteUrlBase;
     GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.offlineTemplateUrlBase;
     GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.offlineCMSBase;
+=======
+>>>>>>> cd9f0a640ad760310564bfd71d842e900f6c8e92
     return GLOBAL_CONFIG;
 }());
+// for online
+GLOBAL_CONFIG.onlineRouteUrlBase = '/';
+GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
+GLOBAL_CONFIG.onlineCMSBase = 'http://api.fastorz.com:9000/';
+// for offline
+GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
+GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
+GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
+// for now
+GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.onlineRouteUrlBase;
+GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.onlineTemplateUrlBase;
+GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.onlineCMSBase;
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider, $httpProvider) {
         $locationProvider.html5Mode({ enabled: true, requireBase: false }); //html5 mode
         $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
@@ -159,7 +174,11 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.search = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
         $scope.base = 0;
         $scope.noMoreData = false;
+<<<<<<< HEAD
         $scope.daren = { showDetal: false };
+=======
+        $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png";
+>>>>>>> cd9f0a640ad760310564bfd71d842e900f6c8e92
         if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
             $scope.deviceType = "ios";
         }

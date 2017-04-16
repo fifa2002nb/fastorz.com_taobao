@@ -17,7 +17,11 @@ interface IBaseScope extends IFastORZScope {
     doRefresh: (searching: boolean) => void;
     loadMore: () => void;
     showPopup: (quan: string) => void;
+<<<<<<< HEAD:static/js/base.ts
     daren: any;
+=======
+    tmallIcon: string;
+>>>>>>> cd9f0a640ad760310564bfd71d842e900f6c8e92:static/js/show.ts
 }
 
 fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService){
@@ -25,7 +29,11 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.search = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
     $scope.base = 0;
     $scope.noMoreData = false;
+<<<<<<< HEAD:static/js/base.ts
     $scope.daren = {showDetal: false};
+=======
+    $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
+>>>>>>> cd9f0a640ad760310564bfd71d842e900f6c8e92:static/js/show.ts
     
     if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
         $scope.deviceType = "ios";

@@ -44,10 +44,8 @@
                         </div>
                         <div class="bottom-panel">
                             <div class="spotlite-name">
-                                <div class="name">
-                                    <img class="tmall-icon" src="http://auz.qnl1.com/open/quan/images/taobao.png">
-                                    <div>{{card.title}}</div>
-                                </div>
+                                <img class="tmall-icon" ng-src="{{mother.tmallIcon}}"/>
+                                <div>{{card.title}}</div>
                             </div>
                             <div class="sell-price">
                                 <span class="item-market-price">￥{{card.market_price}}</span>
@@ -58,7 +56,7 @@
                                 <span class="mail-icon">包邮</span>
                                 <span class="item-sell-num">月销量{{card.sell_num}}</span>
                             </div>
-                            <button class="quan-btn" ng-click="mother.showPopup()" data-clipboard-action="copy" data-clipboard-text="{{card.quan}}">
+                            <button class="quan-btn" ng-click="mother.showPopup(card.quan)" data-clipboard-action="copy" data-clipboard-text="{{card.quan}}">
                                 <span class="quan-text-icon">领券购买</span>
                             </button>
                         </div>
