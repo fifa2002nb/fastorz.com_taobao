@@ -16,20 +16,20 @@ var fastorz = angular.module('FastORZ', [
 var GLOBAL_CONFIG = (function () {
     function GLOBAL_CONFIG() {
     }
-    // for online
-    GLOBAL_CONFIG.onlineRouteUrlBase = '/';
-    GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
-    GLOBAL_CONFIG.onlineCMSBase = 'http://www.sodeyixia.xyz:9000/';
-    // for offline
-    GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
-    GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
-    GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
-    // for now
-    GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.offlineRouteUrlBase;
-    GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.offlineTemplateUrlBase;
-    GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.offlineCMSBase;
     return GLOBAL_CONFIG;
 }());
+// for online
+GLOBAL_CONFIG.onlineRouteUrlBase = '/';
+GLOBAL_CONFIG.onlineTemplateUrlBase = '/static/partials/';
+GLOBAL_CONFIG.onlineCMSBase = 'http://www.sodeyixia.xyz:9000/';
+// for offline
+GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
+GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
+GLOBAL_CONFIG.offlineCMSBase = 'http://127.0.0.1:9000/';
+// for now
+GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.offlineRouteUrlBase;
+GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.offlineTemplateUrlBase;
+GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.offlineCMSBase;
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider, $httpProvider) {
         $locationProvider.html5Mode({ enabled: true, requireBase: false }); //html5 mode
         $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
@@ -149,17 +149,26 @@ function getUser() {
 function setUser(name) {
     createCookie('action-user', name, 1000);
 }
-var baseItem = (function () {
-    function baseItem() {
+var productItem = (function () {
+    function productItem() {
     }
-    return baseItem;
+    return productItem;
+}());
+var darenItem = (function () {
+    function darenItem() {
+    }
+    return darenItem;
 }());
 fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function ($scope, $state, $timeout, $sce, $q, $http, $ionicPopup, $window) {
-        $scope.items = [];
-        $scope.search = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
-        $scope.base = 0;
-        $scope.noMoreData = false;
-        $scope.daren = { showDetal: false };
+        $scope.productItems = [];
+        $scope.productSearch = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
+        $scope.productBase = 0;
+        $scope.productNoMoreData = false;
+        $scope.darenItems = [];
+        $scope.darenSearch = { searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30) };
+        $scope.darenBase = 0;
+        $scope.darenNoMoreData = false;
+        $scope.darenStatus = { showDetail: false, currDaren: null };
         $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png";
         if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
             $scope.deviceType = "ios";
@@ -172,53 +181,53 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         }
         ;
         new Clipboard('.quan-btn');
-        $scope.doRefresh = function (searching) {
+        $scope.productDoRefresh = function (searching) {
             if (!searching) {
-                $scope.search.searchType = Math.round(Math.random() * 30);
+                $scope.productSearch.searchType = Math.round(Math.random() * 30);
             }
-            $scope.noMoreData = false;
-            $scope.search.searching = searching;
-            $scope.base = 0;
-            var data = { key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit, device: $scope.deviceType };
+            $scope.productNoMoreData = false;
+            $scope.productSearch.searching = searching;
+            $scope.productBase = 0;
+            var data = { key: $scope.productSearch.searchKey, type: $scope.productSearch.searchType, base: $scope.productBase, limit: $scope.productSearch.searchLimit, device: $scope.deviceType };
             $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
                 .then(function (res) {
                 if (0 == res.code) {
-                    $scope.items = res.result;
-                    if ($scope.search.searchLimit > $scope.items.length) {
-                        $scope.noMoreData = true;
+                    $scope.productItems = res.result;
+                    if ($scope.productSearch.searchLimit > $scope.productItems.length) {
+                        $scope.productNoMoreData = true;
                     }
                 }
                 else {
                     console.log(res.result);
                 }
-                $scope.base = 1;
+                $scope.productBase = 1;
                 $scope.$broadcast("scroll.refreshComplete");
-                $scope.search.searching = false;
+                $scope.productSearch.searching = false;
             }, function (err) {
                 $scope.$broadcast("scroll.refreshComplete");
-                $scope.search.searching = false;
+                $scope.productSearch.searching = false;
             });
         };
-        $scope.loadMore = function () {
-            $scope.noMoreData = false;
-            var data = { key: $scope.search.searchKey, type: $scope.search.searchType, base: $scope.base, limit: $scope.search.searchLimit, device: $scope.deviceType };
+        $scope.productLoadMore = function () {
+            $scope.productNoMoreData = false;
+            var data = { key: $scope.productSearch.searchKey, type: $scope.productSearch.searchType, base: $scope.productBase, limit: $scope.productSearch.searchLimit, device: $scope.deviceType };
             $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/search", data)
                 .then(function (res) {
                 if (0 == res.code) {
-                    if ($scope.search.searchLimit > res.result.length) {
-                        $scope.noMoreData = true;
+                    if ($scope.productSearch.searchLimit > res.result.length) {
+                        $scope.productNoMoreData = true;
                     }
                     for (var i = 0; i < res.result.length; i++) {
-                        $scope.items.push(res.result[i]);
+                        $scope.productItems.push(res.result[i]);
                     }
                 }
-                $scope.base++;
+                $scope.productBase++;
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             }, function (err) {
                 $scope.$broadcast("scroll.infiniteScrollComplete");
             });
         };
-        $scope.showPopup = function (quan) {
+        $scope.productShowPopup = function (quan) {
             if ("pc" != $scope.deviceType) {
                 var myPopup = $ionicPopup.show({
                     template: '<div style="text-align: center;">请打开【手机淘宝APP】领券下单。</div>',
@@ -239,7 +248,69 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 $window.open(quan);
             }
         };
-        $scope.doRefresh(false);
+        $scope.productDoRefresh(false);
+        $scope.darenDoRefresh = function (searching) {
+            if (!searching) {
+                $scope.darenSearch.searchType = Math.round(Math.random() * 30);
+            }
+            $scope.darenStatus.showDetail = false;
+            $scope.darenNoMoreData = false;
+            $scope.darenSearch.searching = searching;
+            $scope.darenBase = 0;
+            var data = { key: $scope.darenSearch.searchKey, type: $scope.darenSearch.searchType, base: $scope.darenBase, limit: $scope.darenSearch.searchLimit, device: $scope.deviceType };
+            $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/darens", data)
+                .then(function (res) {
+                if (0 == res.code) {
+                    $scope.darenItems = res.result;
+                    if ($scope.darenSearch.searchLimit > $scope.darenItems.length) {
+                        $scope.darenNoMoreData = true;
+                    }
+                }
+                else {
+                    console.log(res.result);
+                }
+                $scope.darenBase = 1;
+                $scope.$broadcast("scroll.refreshComplete");
+                $scope.darenSearch.searching = false;
+            }, function (err) {
+                $scope.$broadcast("scroll.refreshComplete");
+                $scope.darenSearch.searching = false;
+            });
+        };
+        $scope.darenLoadMore = function () {
+            $scope.darenStatus.showDetail = false;
+            $scope.darenNoMoreData = false;
+            var data = { key: $scope.darenSearch.searchKey, type: $scope.darenSearch.searchType, base: $scope.darenBase, limit: $scope.darenSearch.searchLimit, device: $scope.deviceType };
+            $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/darens", data)
+                .then(function (res) {
+                if (0 == res.code) {
+                    if ($scope.darenSearch.searchLimit > res.result.length) {
+                        $scope.darenNoMoreData = true;
+                    }
+                    for (var i = 0; i < res.result.length; i++) {
+                        $scope.darenItems.push(res.result[i]);
+                    }
+                }
+                $scope.darenBase++;
+                $scope.$broadcast("scroll.infiniteScrollComplete");
+            }, function (err) {
+                $scope.$broadcast("scroll.infiniteScrollComplete");
+            });
+        };
+        $scope.darenDetail = function (id) {
+            $scope.darenStatus.showDetail = true;
+            $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "v1/daren?id=" + id)
+                .then(function (res) {
+                if (0 == res.code) {
+                    $scope.darenStatus.currDaren = res.result;
+                }
+                else {
+                    console.log(res);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        };
     }]);
 fastorz.directive('repeatDone', function () {
     return function (scope, element, attrs) {
