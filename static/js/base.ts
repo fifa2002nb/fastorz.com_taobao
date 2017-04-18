@@ -176,6 +176,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     }
 
     $scope.darenDetail = (id: number) => {
+        $scope.scrollToTop("darenDetailScroll");
         $scope.darenStatus.showDetail = true;
         $scope.darenStatus.currDaren = null;
         $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "v1/daren?id=" + id)
