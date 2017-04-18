@@ -30,7 +30,7 @@ class GLOBAL_CONFIG{
     static nowCMSBase: string = GLOBAL_CONFIG.offlineCMSBase;
 }
    
-fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider, $translateProvider: angular.translate.ITranslateProvider, $httpProvider: ng.IHttpProvider){
+fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', '$ionicConfigProvider', function($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider, $translateProvider: angular.translate.ITranslateProvider, $httpProvider: ng.IHttpProvider, $ionicConfigProvider: ionic.utility.IonicConfigProvider){
     $locationProvider.html5Mode({enabled: true, requireBase: false}); //html5 mode
     $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
     $stateProvider.
@@ -50,6 +50,10 @@ fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$t
         prefix: '/static/i18n/',
         suffix: '.json'
     });
+    $ionicConfigProvider.tabs.position("bottom");
+    $ionicConfigProvider.tabs.style("standard");
+    $ionicConfigProvider.navBar.alignTitle('center');
+    $ionicConfigProvider.views.transition('ios');
 }]);
 
 interface IRootScope extends ng.IScope {
