@@ -18,3 +18,4 @@ fastorz.directive('ngEnter', function() {
         });
     };
 });
+

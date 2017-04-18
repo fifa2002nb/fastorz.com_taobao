@@ -29,7 +29,7 @@ do
 done
 
 if [ "cdn" = $USECDN ];then
-    `mv ${DIST_DIR}/js/app.min.js ${DIST_DIR}/js/app.min.${TIMESTAMP}.js && mv ${DIST_DIR}/css/app.min.css ${DIST_DIR}/css/app.min.${TIMESTAMP}.css && sed -e "s/\/static\/css\/app.min.css/http:\/\/${CDNHOST}\/app.min.${TIMESTAMP}.css/g" ${DIST_DIR}/templates/index.html.online|sed -e "s/\/static\/js\/app.min.js/http:\/\/${CDNHOST}\/app.min.${TIMESTAMP}.js/g" > ${DIST_DIR}/templates/index.html && rm -rf ${DIST_DIR}/templates/index.html.online`
+    `mv ${DIST_DIR}/js/app.js ${DIST_DIR}/js/app.${TIMESTAMP}.js && mv ${DIST_DIR}/css/app.css ${DIST_DIR}/css/app.${TIMESTAMP}.css && mv ${DIST_DIR}/js/app.min.js ${DIST_DIR}/js/app.min.${TIMESTAMP}.js && mv ${DIST_DIR}/css/app.min.css ${DIST_DIR}/css/app.min.${TIMESTAMP}.css && sed -e "s/\/static\/css\/app.min.css/http:\/\/${CDNHOST}\/app.min.${TIMESTAMP}.css/g" ${DIST_DIR}/templates/index.html.online|sed -e "s/\/static\/js\/app.min.js/http:\/\/${CDNHOST}\/app.min.${TIMESTAMP}.js/g" > ${DIST_DIR}/templates/index.html && rm -rf ${DIST_DIR}/templates/index.html.online`
 else
     `mv ${DIST_DIR}/js/app.min.js ${DIST_DIR}/js/app.min.${TIMESTAMP}.js && mv ${DIST_DIR}/css/app.min.css ${DIST_DIR}/css/app.min.${TIMESTAMP}.css && sed -e "s/app.min.css/app.min.${TIMESTAMP}.css/g" ${DIST_DIR}/templates/index.html.online|sed -e "s/app.min.js/app.min.${TIMESTAMP}.js/g" > ${DIST_DIR}/templates/index.html && rm -rf ${DIST_DIR}/templates/index.html.online`
 fi

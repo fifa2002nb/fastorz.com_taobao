@@ -27,9 +27,9 @@ GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
 GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
 GLOBAL_CONFIG.offlineCMSBase = 'http://www.sodeyixia.xyz:9000/';
 // for now
-GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.offlineRouteUrlBase;
-GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.offlineTemplateUrlBase;
-GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.offlineCMSBase;
+GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.onlineRouteUrlBase;
+GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.onlineTemplateUrlBase;
+GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.onlineCMSBase;
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider, $httpProvider) {
         $locationProvider.html5Mode({ enabled: true, requireBase: false }); //html5 mode
         $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
@@ -59,7 +59,7 @@ fastorz.run(['$location', '$rootScope', function ($location, $rootScope) {
         });
     }]);
 var fastorzControllers = angular.module('fastorzControllers', []);
-fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '$q', '$filter', '$window', '$ionicSlideBoxDelegate', function ($scope, $translate, $http, $q, $filter, $window, $ionicSlideBoxDelegate) {
+fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '$q', '$filter', '$window', '$ionicSlideBoxDelegate', '$ionicScrollDelegate', function ($scope, $translate, $http, $q, $filter, $window, $ionicSlideBoxDelegate, $ionicScrollDelegate) {
         $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) { });
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) { });
         $scope.changeLanguage = function (key) {
@@ -114,6 +114,9 @@ fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '
                 d.reject(err);
             });
             return d.promise;
+        };
+        $scope.scrollToTop = function (whoseScroll) {
+            $ionicScrollDelegate.$getByHandle(whoseScroll).scrollTop();
         };
     }]);
 function createCookie(name, value, days) {
@@ -299,6 +302,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         };
         $scope.darenDetail = function (id) {
             $scope.darenStatus.showDetail = true;
+            $scope.darenStatus.currDaren = null;
             $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "v1/daren?id=" + id)
                 .then(function (res) {
                 if (0 == res.code) {

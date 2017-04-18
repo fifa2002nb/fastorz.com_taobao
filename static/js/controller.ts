@@ -25,9 +25,9 @@ class GLOBAL_CONFIG{
     static offlineTemplateUrlBase: string = '/static/partials/';
     static offlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
     // for now
-    static nowRouteUrlBase: string = GLOBAL_CONFIG.offlineRouteUrlBase;
-    static nowTemplateUrlBase: string = GLOBAL_CONFIG.offlineTemplateUrlBase;
-    static nowCMSBase: string = GLOBAL_CONFIG.offlineCMSBase;
+    static nowRouteUrlBase: string = GLOBAL_CONFIG.onlineRouteUrlBase;
+    static nowTemplateUrlBase: string = GLOBAL_CONFIG.onlineTemplateUrlBase;
+    static nowCMSBase: string = GLOBAL_CONFIG.onlineCMSBase;
 }
    
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider, $translateProvider: angular.translate.ITranslateProvider, $httpProvider: ng.IHttpProvider){
@@ -76,11 +76,12 @@ interface IFastORZScope extends IRootScope {
     repeatDone: () => void;
     resourceFetcher: (url: string) => any;
     resourcePusher: (url: string, data: any) => any;
+    scrollToTop: (whoseScroll: string) => void;
 }
 
 var fastorzControllers = angular.module('fastorzControllers', []);
 
-fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '$q', '$filter', '$window', '$ionicSlideBoxDelegate', function($scope: IFastORZScope, $translate: angular.translate.ITranslateService, $http: ng.IHttpService, $q: ng.IQService, $filter: ng.IFilterService, $window: ng.IWindowService, $ionicSlideBoxDelegate: ionic.slideBox.IonicSlideBoxDelegate){
+fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '$q', '$filter', '$window', '$ionicSlideBoxDelegate', '$ionicScrollDelegate', function($scope: IFastORZScope, $translate: angular.translate.ITranslateService, $http: ng.IHttpService, $q: ng.IQService, $filter: ng.IFilterService, $window: ng.IWindowService, $ionicSlideBoxDelegate: ionic.slideBox.IonicSlideBoxDelegate, $ionicScrollDelegate: ionic.scroll.IonicScrollDelegate){
     $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){});
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
@@ -142,6 +143,11 @@ fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '
             });
         return d.promise;
     };
+
+    $scope.scrollToTop = (whoseScroll: string) => {
+        $ionicScrollDelegate.$getByHandle(whoseScroll).scrollTop();
+    }
+
 }]);
 
 declare function escape(string: string): string;

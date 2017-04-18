@@ -46,7 +46,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.darenNoMoreData = false;
     $scope.darenStatus = {showDetail: false, currDaren: null};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
-    
+
     if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
         $scope.deviceType = "ios";
     } else if (/(Android)/i.test($window.navigator.userAgent)) {
@@ -177,6 +177,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
 
     $scope.darenDetail = (id: number) => {
         $scope.darenStatus.showDetail = true;
+        $scope.darenStatus.currDaren = null;
         $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "v1/daren?id=" + id)
             .then((res: any) => {
                 if(0 == res.code) {
@@ -188,4 +189,5 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 console.log(err)
             });
     }
+    
 }]);

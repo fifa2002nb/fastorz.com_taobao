@@ -9244,7 +9244,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 				);
 
 				// Use native DOM manipulation to avoid our domManip AJAX trickery
-				document.head.appendChild( script[ 0 ] );
+				//document.head.appendChild( script[ 0 ] ); // modify by xuye
 			},
 			abort: function() {
 				if ( callback ) {
