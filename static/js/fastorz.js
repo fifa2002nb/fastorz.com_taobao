@@ -27,9 +27,9 @@ GLOBAL_CONFIG.offlineRouteUrlBase = '/static/templates/';
 GLOBAL_CONFIG.offlineTemplateUrlBase = '/static/partials/';
 GLOBAL_CONFIG.offlineCMSBase = 'http://www.sodeyixia.xyz:9000/';
 // for now
-GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.onlineRouteUrlBase;
-GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.onlineTemplateUrlBase;
-GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.onlineCMSBase;
+GLOBAL_CONFIG.nowRouteUrlBase = GLOBAL_CONFIG.offlineRouteUrlBase;
+GLOBAL_CONFIG.nowTemplateUrlBase = GLOBAL_CONFIG.offlineTemplateUrlBase;
+GLOBAL_CONFIG.nowCMSBase = GLOBAL_CONFIG.offlineCMSBase;
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider, $httpProvider) {
         $locationProvider.html5Mode({ enabled: true, requireBase: false }); //html5 mode
         $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
