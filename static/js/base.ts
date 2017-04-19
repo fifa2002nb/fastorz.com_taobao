@@ -112,7 +112,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 buttons: [
                     {
                         text: '<b>知道了</b>',
-                        type: 'button-stable',
+                        type: 'button-assertive',
                     }
                 ]
             });
