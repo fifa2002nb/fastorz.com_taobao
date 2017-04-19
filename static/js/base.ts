@@ -155,6 +155,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     }
     
     $scope.darenLoadMore = () => {
+        console.log("darenLoadMore");
         $scope.darenStatus.showDetail = false;
         $scope.darenNoMoreData = false;
         var data = {key: $scope.darenSearch.searchKey, type: $scope.darenSearch.searchType, base: $scope.darenBase, limit: $scope.darenSearch.searchLimit, device: $scope.deviceType};
