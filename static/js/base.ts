@@ -33,6 +33,11 @@ interface IBaseScope extends IFastORZScope {
     darenLoadMore: () => void;
     darenDetail: (id: number) => void;
     tmallIcon: string;
+    personalData : any;
+    pointsPopup: (openID: string) => void;
+    ordersPopup: (openID: string) => void;
+    addOrderPopup: (openID: string) => void;
+    cleanPointsPopup: (openID: string) => void;
 }
 
 fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService){
@@ -46,6 +51,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.darenNoMoreData = false;
     $scope.darenStatus = {showDetail: false, currDaren: null};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
+    $scope.personalData = {};       
 
     if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
         $scope.deviceType = "ios";
@@ -106,7 +112,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.productShowPopup = (quan: string) => {
         if("pc" != $scope.deviceType) {
             var myPopup = $ionicPopup.show({
-                template: '<div style="text-align: center;">请打开【手机淘宝APP】领券下单。</div>',
+                template: '<div style="font-size:16px;text-align:center;">请打开【手机淘宝APP】领券下单。</div>',
                 title: '已复制淘口令',
                 scope: $scope,
                 buttons: [
@@ -192,4 +198,99 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             });
     }
     
+    $scope.pointsPopup = (openID: string) => {
+        var myPopup = $ionicPopup.show({
+            templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'points.html', 
+            title: '积分详情',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<b>保存</b>',
+                    type: 'button-assertive',
+                },
+                {
+                    text: '<b>取消</b>',
+                    type: 'button-normal',
+                },
+            ]
+        });
+        myPopup.then(function(res) {
+            console.log('Tapped!', res);
+            });
+    }
+    $scope.ordersPopup = (openID: string) => {
+        var myPopup = $ionicPopup.show({
+            templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'orders.html', 
+            title: '积分详情',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<b>保存</b>',
+                    type: 'button-assertive',
+                },
+                {
+                    text: '<b>取消</b>',
+                    type: 'button-normal',
+                },
+            ]
+        });
+        myPopup.then(function(res) {
+            console.log('Tapped!', res);
+            });
+    }
+    $scope.addOrderPopup = (openID: string) => {
+        $scope.personalData.order =  "";
+        var myPopup = $ionicPopup.show({
+            template: '<div style="font-size:16px;text-align:center;">请在此输入【淘宝APP】下单后的购物订单号。订单号样例：08090232。</div><br/><input type="text" ng-model="personalData.order">', 
+            title: '淘宝订单登记',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<b>提交</b>',
+                    type: 'button-assertive',
+                    onTap: function(e) {
+                        if ("" == $scope.personalData.order) {
+                            e.preventDefault();
+                        } else {
+                            return $scope.personalData.order;
+                        }
+                    }
+                },
+                {
+                    text: '<b>取消</b>',
+                    type: 'button-normal',
+                },
+            ],
+        });
+        myPopup.then(function(res) {
+        });
+    }
+    $scope.cleanPointsPopup = (openID: string) => {
+        $scope.personalData.alipayAccount = "";
+        var myPopup = $ionicPopup.show({
+            template: '<div style="font-size:16px;text-align:center;">请在此输入亲的【支付宝账号】，客服会在1小时内进行转账操作。</div><br/><input type="text" ng-model="personalData.alipayAccount">', 
+            title: '积分提现',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<b>提交</b>',
+                    type: 'button-assertive',
+                    onTap: function(e) {
+                        if ("" == $scope.personalData.alipayAccount) {
+                            e.preventDefault();
+                        } else {
+                            return $scope.personalData.alipayAccount;
+                        }
+                    }
+                },
+                {
+                    text: '<b>取消</b>',
+                    type: 'button-normal',
+                },
+            ],
+        });
+        myPopup.then(function(res) {
+        });
+    }
+
 }]);
