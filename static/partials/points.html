@@ -6,53 +6,11 @@
         <th class="col">订单积分</th>
         <th class="col">订单操作</th>
     </tr>
-    <tr class="row">
-        <td class="col">20170421</td>
-        <td class="col">33023023</td>
-        <td class="col">待确认</td>
-        <td class="col">10</td>
-        <td class="col"><u>删除</u></td>
-    </tr>
-    <tr class="row">
-        <td class="col">20170421</td>
-        <td class="col">33023023</td>
-        <td class="col">待确认</td>
-        <td class="col">10</td>
-        <td class="col"><u>删除</u></td>
-    </tr>
-    <tr class="row">
-        <td class="col">20170421</td>
-        <td class="col">33023023</td>
-        <td class="col">待确认</td>
-        <td class="col">10</td>
-        <td class="col"><u>删除</u></td>
-    </tr>
-    <tr class="row">
-        <td class="col">20170421</td>
-        <td class="col">33023023</td>
-        <td class="col">待确认</td>
-        <td class="col">10</td>
-        <td class="col"><u>删除</u></td>
-    </tr>
-    <tr class="row">
-        <td class="col">20170421</td>
-        <td class="col">33023023</td>
-        <td class="col">待确认</td>
-        <td class="col">10</td>
-        <td class="col"><u>删除</u></td>
-    </tr>
-    <tr class="row">
-        <td class="col">20170421</td>
-        <td class="col">33023023</td>
-        <td class="col">待确认</td>
-        <td class="col">10</td>
-        <td class="col"><u>删除</u></td>
-    </tr>
-    <tr class="row">
-        <td class="col">20170421</td>
-        <td class="col">33023023</td>
-        <td class="col">待确认</td>
-        <td class="col">10</td>
-        <td class="col"><u>删除</u></td>
+    <tr class="row" ng-repeat="order in orders">
+        <td class="col">order.date</td>
+        <td class="col">order.orderNumber</td>
+        <td class="col">order.state</td>
+        <td class="col">order.points</td>
+        <td class="col"><u></u></td>
     </tr>
 </table>

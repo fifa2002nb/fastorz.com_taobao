@@ -38,6 +38,7 @@ interface IBaseScope extends IFastORZScope {
     ordersPopup: (openID: string) => void;
     addOrderPopup: (openID: string) => void;
     cleanPointsPopup: (openID: string) => void;
+    currUser: any;
 }
 
 fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService){
@@ -51,8 +52,12 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.darenNoMoreData = false;
     $scope.darenStatus = {showDetail: false, currDaren: null};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
-    $scope.personalData = {};       
+    $scope.personalData = {orders: null};       
+    $scope.currUser = {openID: null};
 
+    $scope.currUser.openID = angular.element('#fastorz').attr("alt");
+    console.log($scope.currUser.openID);
+    
     if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
         $scope.deviceType = "ios";
     } else if (/(Android)/i.test($window.navigator.userAgent)) {

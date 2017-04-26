@@ -1,10 +1,7 @@
-<!DOCTYPE html>
 <html ng-app="FastORZ">
-
 <head>
     <title>{{'fastorz'|translate}}</title>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0;">
-    <!-- CSS App -->
     <link rel="stylesheet" type="text/css" href="/static/css/app.min.css">
     <script>
         var _hmt = _hmt || [];
@@ -16,10 +13,9 @@
         })();
     </script>
 </head>
-
 <body ng-controller="FastORZCtrl">
+    <div id="fastorz" alt="<<.openID>>"></div>
     <ui-view/>
-    <!-- Javascript Libs -->
     <script type="text/javascript" src="/static/js/app.min.js"></script>
 </body>
 </html>
