@@ -102,29 +102,31 @@
         </ion-header-bar>
         <ion-content class="content" style="padding: 4px;">
             <ion-list>
-                <a class="item item-avatar item-icon-right" ng-click="">
+                <a class="item item-avatar" ng-click="">
                     <img src="http://7fvbl4.com1.z0.glb.clouddn.com/head.png"/>
-                    <h2><span>公公公愚</span></h2>
-                    <p>积分：<span>996</span></p>
-                    <i class="icon ion-ios-arrow-right"></i>
+                    <h2><span>{{currUser.openID}}</span></h2>
+                    <p>积分：
+                        <span ng-hide="-1!=currUser.payingPoints">读取中...</span>
+                        <span ng-show="-1!=currUser.payingPoints">{{currUser.payingPoints}}</span>
+                    </p>
                 </a> 
-                <div class="item item-icon-right" ng-click="pointsPopup('aaaaaaaa')">
+                <div class="item item-icon-right" ng-click="pointsPopup()">
                     <span>积分详情</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
-                <div class="item item-icon-right" ng-click="ordersPopup('aaaaaaaa')">
+                <div class="item item-icon-right" ng-click="ordersPopup()">
                     <span>订单详情</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
-                <div class="item item-icon-right" ng-click="addOrderPopup('aaaaaaa')">
+                <div class="item item-icon-right" ng-click="addOrderPopup()">
                     <span>订单登记</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
-                <div class="item item-icon-right" ng-click="cleanPointsPopup('aaaaaaa')">
+                <div class="item item-icon-right" ng-click="cleanPointsPopup()">
                     <span>积分提现</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
-                <div class="item item-icon-right">
+                <div class="item item-icon-right" ng-click="showRules()">
                     <span>规则说明</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>

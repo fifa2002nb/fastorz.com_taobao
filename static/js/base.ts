@@ -34,10 +34,12 @@ interface IBaseScope extends IFastORZScope {
     darenDetail: (id: number) => void;
     tmallIcon: string;
     personalData : any;
-    pointsPopup: (openID: string) => void;
-    ordersPopup: (openID: string) => void;
-    addOrderPopup: (openID: string) => void;
-    cleanPointsPopup: (openID: string) => void;
+    pointsPopup: () => void;
+    ordersPopup: () => void;
+    addOrderPopup: () => void;
+    cleanPointsPopup: () => void;
+    showRules: () => void;
+    refreshOrders: () => void;
     currUser: any;
 }
 
@@ -53,10 +55,8 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.darenStatus = {showDetail: false, currDaren: null};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
     $scope.personalData = {orders: null};       
-    $scope.currUser = {openID: null};
-
+    $scope.currUser = {openID: null, orders: null, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrder: null};
     $scope.currUser.openID = angular.element('#fastorz').attr("alt");
-    console.log($scope.currUser.openID);
     
     if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
         $scope.deviceType = "ios";
@@ -166,7 +166,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     }
     
     $scope.darenLoadMore = () => {
-        console.log("darenLoadMore");
         $scope.darenStatus.showDetail = false;
         $scope.darenNoMoreData = false;
         var data = {key: $scope.darenSearch.searchKey, type: $scope.darenSearch.searchType, base: $scope.darenBase, limit: $scope.darenSearch.searchLimit, device: $scope.deviceType};
@@ -202,8 +201,30 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 console.log(err)
             });
     }
-    
-    $scope.pointsPopup = (openID: string) => {
+    $scope.refreshOrders = () => {
+        var data = {openID: $scope.currUser.openID};
+        $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/searchorders", data)
+            .then((res: any) => {
+                if(0 == res.code && res.result) {
+                    $scope.currUser.orders = res.result.orders;
+                    $scope.currUser.payingCount = res.result.payingCount;
+                    $scope.currUser.payingPoints = res.result.payingPoints;
+                    $scope.currUser.paidCount = res.result.paidCount;
+                    $scope.currUser.paidPoints = res.result.paidPoints;
+                } else {
+                    console.log(res.result);
+                }
+            }, (err: any) => {
+                console.log(err);
+            });
+    }
+   
+    $scope.refreshOrders();
+
+    $scope.pointsPopup = () => {
+        if (null == $scope.currUser.orders) {
+            $scope.refreshOrders();
+        }
         var myPopup = $ionicPopup.show({
             templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'points.html', 
             title: '积分详情',
@@ -223,7 +244,10 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             console.log('Tapped!', res);
             });
     }
-    $scope.ordersPopup = (openID: string) => {
+    $scope.ordersPopup = () => {
+        if (null == $scope.currUser.orders) {
+            $scope.refreshOrders();
+        }
         var myPopup = $ionicPopup.show({
             templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'orders.html', 
             title: '积分详情',
@@ -243,10 +267,10 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             console.log('Tapped!', res);
             });
     }
-    $scope.addOrderPopup = (openID: string) => {
+    $scope.addOrderPopup = () => {
         $scope.personalData.order =  "";
         var myPopup = $ionicPopup.show({
-            template: '<div style="font-size:16px;text-align:center;">请在此输入【淘宝APP】下单后的购物订单号。订单号样例：08090232。</div><br/><input type="text" ng-model="personalData.order">', 
+            template: '<div style="font-size:16px;text-align:center;">请在此输入【淘宝APP】下单后的购物订单号。订单号样例：10157050315078885。</div><br/><input type="text" ng-model="currUser.submitOrder">', 
             title: '淘宝订单登记',
             scope: $scope,
             buttons: [
@@ -254,10 +278,10 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     text: '<b>提交</b>',
                     type: 'button-assertive',
                     onTap: function(e) {
-                        if ("" == $scope.personalData.order) {
+                        if ("" == $scope.currUser.submitOrder) {
                             e.preventDefault();
                         } else {
-                            return $scope.personalData.order;
+                            return $scope.currUser.submitOrder;
                         }
                     }
                 },
@@ -270,10 +294,27 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         myPopup.then(function(res) {
         });
     }
-    $scope.cleanPointsPopup = (openID: string) => {
+    $scope.showRules = () => {
+        var myPopup = $ionicPopup.show({
+            template: '<div style="font-size:16px;text-align:center;">100积分 = 1元人民币</div>', 
+            title: '积分变现规则',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<b>知道了</b>',
+                    type: 'button-assertive',
+                }
+            ],
+        });
+        myPopup.then(function(res) {
+        });
+    }
+
+    $scope.cleanPointsPopup = () => {
+        $scope.refreshOrders();
         $scope.personalData.alipayAccount = "";
         var myPopup = $ionicPopup.show({
-            template: '<div style="font-size:16px;text-align:center;">请在此输入亲的【支付宝账号】，客服会在1小时内进行转账操作。</div><br/><input type="text" ng-model="personalData.alipayAccount">', 
+            templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'points_clean.html',
             title: '积分提现',
             scope: $scope,
             buttons: [
