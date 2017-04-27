@@ -40,6 +40,8 @@ interface IBaseScope extends IFastORZScope {
     cleanPointsPopup: () => void;
     showRules: () => void;
     refreshOrders: () => void;
+    submitOrder: (orderNumber: string) => void;
+    payOrders: (alipayAccount: string) => void;
     currUser: any;
 }
 
@@ -55,7 +57,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.darenStatus = {showDetail: false, currDaren: null};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
     $scope.personalData = {orders: null};       
-    $scope.currUser = {openID: null, orders: null, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrder: null};
+    $scope.currUser = {openID: null, orders: null, shippedCount: -1, shippedPoints: -1, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrderNumber: null, onFail: false, alipayAccount: null};
     $scope.currUser.openID = angular.element('#fastorz').attr("alt");
     
     if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
@@ -127,9 +129,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     }
                 ]
             });
-            myPopup.then(function(res) {
-                console.log('Tapped!', res);
-                });
         } else {
             $window.open(quan);
         }
@@ -207,18 +206,45 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             .then((res: any) => {
                 if(0 == res.code && res.result) {
                     $scope.currUser.orders = res.result.orders;
+                    $scope.currUser.shippedCount = res.result.shippedCount;
+                    $scope.currUser.shippedPoints = res.result.shippedPoints;
                     $scope.currUser.payingCount = res.result.payingCount;
                     $scope.currUser.payingPoints = res.result.payingPoints;
                     $scope.currUser.paidCount = res.result.paidCount;
                     $scope.currUser.paidPoints = res.result.paidPoints;
                 } else {
-                    console.log(res.result);
+                    console.log(res);
                 }
             }, (err: any) => {
                 console.log(err);
             });
     }
-   
+    $scope.submitOrder = (orderNumber: string) => {
+        var data = {openID: $scope.currUser.openID, orderNumber: orderNumber};
+        $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/submitorder", data)
+            .then((res: any) => {
+                if(0 == res.code) {
+                    console.log(res.result);
+                } else {
+                    console.log(res);
+                }
+            }, (err: any) => {
+                console.log(err);
+            });
+    } 
+    $scope.payOrders = (alipayAccount: string) => {
+        var data = {openID: $scope.currUser.openID, alipayAccount: alipayAccount};
+        $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/payorders", data)
+            .then((res: any) => {
+                if(0 == res.code) {
+                    console.log(res.result);
+                } else {
+                    console.log(res);
+                }
+            }, (err: any) => {
+                console.log(err);
+            });
+    } 
     $scope.refreshOrders();
 
     $scope.pointsPopup = () => {
@@ -240,9 +266,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 },
             ]
         });
-        myPopup.then(function(res) {
-            console.log('Tapped!', res);
-            });
     }
     $scope.ordersPopup = () => {
         if (null == $scope.currUser.orders) {
@@ -263,14 +286,12 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 },
             ]
         });
-        myPopup.then(function(res) {
-            console.log('Tapped!', res);
-            });
     }
     $scope.addOrderPopup = () => {
-        $scope.personalData.order =  "";
+        $scope.currUser.submitOrderNumber =  "";
+        $scope.currUser.onFail = false;
         var myPopup = $ionicPopup.show({
-            template: '<div style="font-size:16px;text-align:center;">请在此输入【淘宝APP】下单后的购物订单号。订单号样例：10157050315078885。</div><br/><input type="text" ng-model="currUser.submitOrder">', 
+            template: '<div style="font-size:16px;text-align:center;">请在此输入【淘宝APP】下单后的购物订单号。订单号样例：10157050315078885。</div><br/><input type="text" ng-model="currUser.submitOrderNumber"><br/><div ng-show="currUser.onFail" style="font-size:16px;text-align:center;color:#eb4e53;">请输入有效订单号。</div>', 
             title: '淘宝订单登记',
             scope: $scope,
             buttons: [
@@ -278,10 +299,18 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     text: '<b>提交</b>',
                     type: 'button-assertive',
                     onTap: function(e) {
-                        if ("" == $scope.currUser.submitOrder) {
+                        if ("" == $scope.currUser.submitOrderNumber) {
+                            $scope.currUser.onFail = true;
                             e.preventDefault();
                         } else {
-                            return $scope.currUser.submitOrder;
+                            var myreg = /[0-9]{17}/;  
+                            if(!myreg.test($scope.currUser.submitOrderNumber)) {
+                                $scope.currUser.onFail = true;
+                                e.preventDefault();
+                            } else {
+                                $scope.submitOrder($scope.currUser.submitOrderNumber);
+                                return $scope.currUser.submitOrderNumber;
+                            }
                         }
                     }
                 },
@@ -290,8 +319,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     type: 'button-normal',
                 },
             ],
-        });
-        myPopup.then(function(res) {
         });
     }
     $scope.showRules = () => {
@@ -306,13 +333,12 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 }
             ],
         });
-        myPopup.then(function(res) {
-        });
     }
 
     $scope.cleanPointsPopup = () => {
         $scope.refreshOrders();
-        $scope.personalData.alipayAccount = "";
+        $scope.currUser.alipayAccount = "";
+        $scope.currUser.onFail = false;
         var myPopup = $ionicPopup.show({
             templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'points_clean.html',
             title: '积分提现',
@@ -323,9 +349,17 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     type: 'button-assertive',
                     onTap: function(e) {
                         if ("" == $scope.personalData.alipayAccount) {
+                            $scope.currUser.onFail = true;
                             e.preventDefault();
                         } else {
-                            return $scope.personalData.alipayAccount;
+                            var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+                            if(!reg.test($scope.currUser.alipayAccount)) {
+                                $scope.currUser.onFail = true;
+                                e.preventDefault();
+                            } else {
+                                $scope.payOrders($scope.currUser.alipayAccount);
+                                return $scope.currUser.alipayAccount;
+                            }
                         }
                     }
                 },
@@ -334,8 +368,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     type: 'button-normal',
                 },
             ],
-        });
-        myPopup.then(function(res) {
         });
     }
 

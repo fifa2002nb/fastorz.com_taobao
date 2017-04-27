@@ -1,11 +1,15 @@
 <table style="width:100%;">
     <tr class="row">
+        <td class="col">提现中订单数：{{currUser.payingCount}}</td>
+        <td class="col">提现中积分数：{{currUser.payingPoints}}</td>
+    </tr>
+    <tr class="row">
         <td class="col">已提现订单数：{{currUser.paidCount}}</td>
         <td class="col">已提现积分数：{{currUser.paidPoints}}</td>
     </tr>
     <tr class="row">
-        <td class="col">可提现订单数：{{currUser.payingCount}}</td>
-        <td class="col">可提现积分数：{{currUser.payingPoints}}</td>
+        <td class="col">可提现订单数：{{currUser.shippedCount}}</td>
+        <td class="col">可提现积分数：{{currUser.shippedPoints}}</td>
     </tr>
 </table>
 <table>
