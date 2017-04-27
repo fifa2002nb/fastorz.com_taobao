@@ -314,7 +314,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                             $scope.currUser.onFail = true;
                             e.preventDefault();
                         } else {
-                            var myreg = /[0-9]{17}/;  
+                            var myreg = /[0-9]{10,30}/;  
                             if(!myreg.test($scope.currUser.submitOrderNumber)) {
                                 $scope.currUser.onFail = true;
                                 e.preventDefault();
