@@ -1,5 +1,5 @@
 <ion-tabs class="tabs-positive tabs-icon-only">
-    <ion-tab title="每日精选" on-select="">
+    <ion-tab title="每日精选">
         <ion-content lazy-scroll id="product">
             <div ng-if="productSearch.searching" style="text-align: center;padding-top: 10px;">
                 <ion-spinner ng-if="productSearch.searching" icon="ios"></ion-spinner>
@@ -96,14 +96,14 @@
             </ion-infinite-scroll>
         </ion-content>    
     </ion-tab>
-    <ion-tab title="个人中心" on-select="">
+    <ion-tab title="个人中心" ng-if="currUser.isAdmin">
         <ion-header-bar>
             <h1 class="title">个人中心</h1>
         </ion-header-bar>
         <ion-content class="content" style="padding: 4px;">
             <ion-list>
                 <a class="item item-avatar" ng-click="">
-                    <img src="http://7fvbl4.com1.z0.glb.clouddn.com/head.png"/>
+                    <img src="http://gw.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_40x40.jpg"/>
                     <h2><span>{{currUser.openID}}</span></h2>
                     <p>积分：
                         <span ng-hide="-1!=currUser.payingPoints">读取中...</span>
