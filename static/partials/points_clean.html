@@ -8,12 +8,12 @@
 <br/>
 <input type="text" ng-model="currUser.alipayAccount">
 <br/>
-<table style="width:100%;" ng-if="currUser.orders">
+<table style="width:100%;">
     <tr class="row">
         <td class="col">可提现订单数：{{currUser.shippedCount}}</td>
         <td class="col">可提现积分数：{{currUser.shippedPoints}}</td>
     </tr>
-    <tr class="row header">
+    <tr class="row header" ng-if="0<currUser.orders.length">
         <th class="col">订单日期</th>
         <th class="col">订单号码</th>
         <th class="col">订单状态</th>

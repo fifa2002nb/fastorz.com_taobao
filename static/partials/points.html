@@ -12,7 +12,7 @@
         <td class="col">可提现积分数：{{currUser.shippedPoints}}</td>
     </tr>
 </table>
-<table ng-if="currUser.orders">
+<table ng-if="0<currUser.orders.length">
     <tr class="row header">
         <th class="col">订单日期</th>
         <th class="col">订单号码</th>

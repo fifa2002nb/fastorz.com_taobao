@@ -43,6 +43,7 @@ interface IBaseScope extends IFastORZScope {
     submitOrder: (orderNumber: string) => void;
     payOrders: (alipayAccount: string) => void;
     currUser: any;
+    loginOrder: () => void;
 }
 
 fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService){
@@ -59,7 +60,42 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.personalData = {orders: null};       
     $scope.currUser = {openID: null, isAdmin: false, orders: null, shippedCount: -1, shippedPoints: -1, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrderNumber: null, onFail: false, alipayAccount: null};
     $scope.currUser.openID = angular.element('#openID').attr("alt");
+    $scope.refreshOrders = () => {
+        var data = {openID: $scope.currUser.openID};
+        $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/searchorders", data)
+            .then((res: any) => {
+                if(0 == res.code && res.result) {
+                    $scope.currUser.orders = res.result.orders;
+                    $scope.currUser.shippedCount = res.result.shippedCount;
+                    $scope.currUser.shippedPoints = res.result.shippedPoints;
+                    $scope.currUser.payingCount = res.result.payingCount;
+                    $scope.currUser.payingPoints = res.result.payingPoints;
+                    $scope.currUser.paidCount = res.result.paidCount;
+                    $scope.currUser.paidPoints = res.result.paidPoints;
+                } else {
+                    console.log(res);
+                }
+            }, (err: any) => {
+                console.log(err);
+            });
+    }
+    $scope.loginOrder = () => {
+        var data = {openID: $scope.currUser.openID};
+        $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/godlogin", data)
+            .then((res: any) => {
+                if(0 == res.code) {
+                    console.log(res.result);
+                    $scope.refreshOrders();
+                } else {
+                    console.log(res);
+                }
+            }, (err: any) => {
+                console.log(err);
+            });
+    } 
+
     if ("" != $scope.currUser.openID) {
+        $scope.loginOrder();
         $scope.selectTab(2);
         if ("oSQ8KtyQHjsiVzt5rSM_LWmDYiyw" == $scope.currUser.openID || "oSQ8Kt2_bfXWt5lcea-NcRmb4sfA" == $scope.currUser.openID || "oSQ8Kt_RWX1VuVt8OZUHuRzny-0s" == $scope.currUser.openID || "oSQ8Kt3oAEu6cw-HQp-Qwue0OV7M" == $scope.currUser.openID) {
             $scope.currUser.isAdmin = true;
@@ -207,25 +243,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 console.log(err)
             });
     }
-    $scope.refreshOrders = () => {
-        var data = {openID: $scope.currUser.openID};
-        $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/searchorders", data)
-            .then((res: any) => {
-                if(0 == res.code && res.result) {
-                    $scope.currUser.orders = res.result.orders;
-                    $scope.currUser.shippedCount = res.result.shippedCount;
-                    $scope.currUser.shippedPoints = res.result.shippedPoints;
-                    $scope.currUser.payingCount = res.result.payingCount;
-                    $scope.currUser.payingPoints = res.result.payingPoints;
-                    $scope.currUser.paidCount = res.result.paidCount;
-                    $scope.currUser.paidPoints = res.result.paidPoints;
-                } else {
-                    console.log(res);
-                }
-            }, (err: any) => {
-                console.log(err);
-            });
-    }
     $scope.submitOrder = (orderNumber: string) => {
         var data = {openID: $scope.currUser.openID, orderNumber: orderNumber};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/submitorder", data)
@@ -252,12 +269,9 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 console.log(err);
             });
     } 
-    $scope.refreshOrders();
 
     $scope.pointsPopup = () => {
-        if (null == $scope.currUser.orders) {
-            $scope.refreshOrders();
-        }
+        $scope.refreshOrders();
         var myPopup = $ionicPopup.show({
             templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'points.html', 
             title: '积分详情',
@@ -271,9 +285,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         });
     }
     $scope.ordersPopup = () => {
-        if (null == $scope.currUser.orders) {
-            $scope.refreshOrders();
-        }
+        $scope.refreshOrders();
         var myPopup = $ionicPopup.show({
             templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'orders.html', 
             title: '积分详情',
