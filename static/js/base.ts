@@ -46,7 +46,7 @@ interface IBaseScope extends IFastORZScope {
     loginOrder: () => void;
 }
 
-fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService){
+fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', '$ionicTabsDelegate', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService, $ionicTabsDelegate: ionic.tabs.IonicTabsDelegate){
     $scope.productItems = [];
     $scope.productSearch = {searchKey: "", searching: false, searchLimit: 12, searchType: Math.round(Math.random() * 30)};
     $scope.productBase = 0;
@@ -60,6 +60,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.personalData = {orders: null};       
     $scope.currUser = {openID: null, isAdmin: false, orders: null, shippedCount: -1, shippedPoints: -1, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrderNumber: null, onFail: false, alipayAccount: null};
     $scope.currUser.openID = angular.element('#openID').attr("alt");
+    
     $scope.refreshOrders = () => {
         var data = {openID: $scope.currUser.openID};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/searchorders", data)
@@ -84,7 +85,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/godlogin", data)
             .then((res: any) => {
                 if(0 == res.code) {
-                    console.log(res.result);
                     $scope.refreshOrders();
                 } else {
                     console.log(res);
@@ -96,11 +96,9 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
 
     if ("" != $scope.currUser.openID) {
         $scope.loginOrder();
-        $scope.selectTab(2);
         if ("oSQ8KtyQHjsiVzt5rSM_LWmDYiyw" == $scope.currUser.openID || "oSQ8Kt2_bfXWt5lcea-NcRmb4sfA" == $scope.currUser.openID || "oSQ8Kt_RWX1VuVt8OZUHuRzny-0s" == $scope.currUser.openID || "oSQ8Kt3oAEu6cw-HQp-Qwue0OV7M" == $scope.currUser.openID) {
             $scope.currUser.isAdmin = true;
         }
-        console.log($scope.currUser.openID + "|" + $scope.currUser.isAdmin)
     }
 
     if (/(iPhone|iPad|iPod|iOS)/i.test($window.navigator.userAgent)) {
@@ -176,8 +174,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             $window.open(quan);
         }
     }
-
-    $scope.productDoRefresh(false);
 
     $scope.darenDoRefresh = (searching: boolean) => {
         if(!searching) {
@@ -381,5 +377,12 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             ],
         });
     }
-
+    $scope.productDoRefresh(false);
+    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+        if($scope.currUser.isAdmin && ''!=$scope.currUser.openID) {
+            $ionicTabsDelegate.$getByHandle("fastTabs").select(2);
+        } else {
+            console.log(angular.element("body > ui-view > ion-tabs > div > a:nth-child(6)").remove());
+        }
+    });
 }]);
