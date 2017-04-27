@@ -58,9 +58,10 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.darenStatus = {showDetail: false, currDaren: null};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
     $scope.personalData = {orders: null};       
-    $scope.currUser = {openID: null, isAdmin: false, orders: null, shippedCount: -1, shippedPoints: -1, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrderNumber: null, onFail: false, alipayAccount: null};
+    $scope.currUser = {openID: null, state: null, isAdmin: false, orders: null, shippedCount: -1, shippedPoints: -1, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrderNumber: null, onFail: false, alipayAccount: null};
     $scope.currUser.openID = angular.element('#openID').attr("alt");
-    
+    $scope.currUser.state = angular.element('#state').attr("alt");
+
     $scope.refreshOrders = () => {
         var data = {openID: $scope.currUser.openID};
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/searchorders", data)
@@ -379,10 +380,16 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     }
     $scope.productDoRefresh(false);
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-        if($scope.currUser.isAdmin && ''!=$scope.currUser.openID) {
-            $ionicTabsDelegate.$getByHandle("fastTabs").select(2);
+        if('' != $scope.currUser.openID) {
+            if('userCenter' == $scope.currUser.state) {
+                $ionicTabsDelegate.$getByHandle("fastTabs").select(2);
+            } else if('dailyProducts' == $scope.currUser.state) {
+                $ionicTabsDelegate.$getByHandle("fastTabs").select(0);
+            } else {
+                $ionicTabsDelegate.$getByHandle("fastTabs").select(1);    
+            }
         } else {
-            console.log(angular.element("body > ui-view > ion-tabs > div > a:nth-child(6)").remove());
+            angular.element("body > ui-view > ion-tabs > div > a:nth-child(6)").remove();
         }
     });
 }]);
