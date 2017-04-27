@@ -58,9 +58,10 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
     $scope.personalData = {orders: null};       
     $scope.currUser = {openID: null, isAdmin: false, orders: null, shippedCount: -1, shippedPoints: -1, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrderNumber: null, onFail: false, alipayAccount: null};
-    $scope.currUser.openID = angular.element('#fastorz').attr("alt");
+    $scope.currUser.openID = angular.element('#openID').attr("alt");
     if ("" != $scope.currUser.openID) {
-        if ("oSQ8KtyQHjsiVzt5rSM_LWmDYiyw" == $scope.currUser.openID || "oSQ8Kt2_bfXWt5lcea-NcRmb4sfA" == $scope.currUser.openID || "oSQ8Kt_RWX1VuVt8OZUHuRzny-0s" == $scope.currUser.openID) {
+        $scope.selectTab(2);
+        if ("oSQ8KtyQHjsiVzt5rSM_LWmDYiyw" == $scope.currUser.openID || "oSQ8Kt2_bfXWt5lcea-NcRmb4sfA" == $scope.currUser.openID || "oSQ8Kt_RWX1VuVt8OZUHuRzny-0s" == $scope.currUser.openID || "oSQ8Kt3oAEu6cw-HQp-Qwue0OV7M" == $scope.currUser.openID) {
             $scope.currUser.isAdmin = true;
         }
         console.log($scope.currUser.openID + "|" + $scope.currUser.isAdmin)

@@ -81,11 +81,12 @@ interface IFastORZScope extends IRootScope {
     resourceFetcher: (url: string) => any;
     resourcePusher: (url: string, data: any) => any;
     scrollToTop: (whoseScroll: string) => void;
+    selectTab: (index: number) => void;
 }
 
 var fastorzControllers = angular.module('fastorzControllers', []);
 
-fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '$q', '$filter', '$window', '$ionicSlideBoxDelegate', '$ionicScrollDelegate', function($scope: IFastORZScope, $translate: angular.translate.ITranslateService, $http: ng.IHttpService, $q: ng.IQService, $filter: ng.IFilterService, $window: ng.IWindowService, $ionicSlideBoxDelegate: ionic.slideBox.IonicSlideBoxDelegate, $ionicScrollDelegate: ionic.scroll.IonicScrollDelegate){
+fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '$q', '$filter', '$window', '$ionicSlideBoxDelegate', '$ionicScrollDelegate', '$ionicTabsDelegate', function($scope: IFastORZScope, $translate: angular.translate.ITranslateService, $http: ng.IHttpService, $q: ng.IQService, $filter: ng.IFilterService, $window: ng.IWindowService, $ionicSlideBoxDelegate: ionic.slideBox.IonicSlideBoxDelegate, $ionicScrollDelegate: ionic.scroll.IonicScrollDelegate, $ionicTabsDelegate: ionic.tabs.IonicTabsDelegate){
     $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){});
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {});
 
@@ -151,6 +152,10 @@ fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '
     $scope.scrollToTop = (whoseScroll: string) => {
         $ionicScrollDelegate.$getByHandle(whoseScroll).scrollTop();
     }
+    $scope.selectTab = (index: number) => {
+        $ionicTabsDelegate.$getByHandle("fastTabs").select(index);
+    }
+    console.log($ionicTabsDelegate.$getByHandle("fastTabs").selectedIndex());
 }]);
 
 declare function escape(string: string): string;

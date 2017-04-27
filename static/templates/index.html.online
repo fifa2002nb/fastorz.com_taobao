@@ -14,7 +14,8 @@
     </script>
 </head>
 <body ng-controller="FastORZCtrl">
-    <div id="fastorz" alt="<<.openID>>"></div>
+    <div id="openID" alt="<<.openID>>"></div>
+    <div id="state" alt="<<.state>>"></div>
     <ui-view/>
     <script type="text/javascript" src="/static/js/app.min.js"></script>
 </body>

@@ -1,4 +1,4 @@
-<ion-tabs class="tabs-positive tabs-icon-only">
+<ion-tabs class="tabs-positive tabs-icon-only" delegate-handle="fastTabs">
     <ion-tab title="每日精选">
         <ion-content lazy-scroll id="product">
             <div ng-if="productSearch.searching" style="text-align: center;padding-top: 10px;">
@@ -96,7 +96,7 @@
             </ion-infinite-scroll>
         </ion-content>    
     </ion-tab>
-    <ion-tab title="个人中心" ng-if="currUser.isAdmin">
+    <ion-tab title="个人中心" ng-if="currUser.isAdmin && ''!=currUser.openID">
         <ion-header-bar>
             <h1 class="title">个人中心</h1>
         </ion-header-bar>
