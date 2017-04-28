@@ -273,7 +273,9 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.currUser.msg = "";
         var hint = "输入有效订单号。";
         var successHint = "提交成功。";
-        var failHint = "提交失败。";
+        var notExistHint = "订单不存在，请5分钟后再试。";
+        var alreadyExistHint = "订单已存在，请勿重复提交。";
+        var otherErrHint = "其他错误。";
         var serverErrHint = "服务器故障。";
         var myPopup = $ionicPopup.show({
             template: '<div style="font-size:16px;text-align:center;">请在此输入【淘宝APP】下单后的购物订单号。订单号样例：10157050315078885。</div><br/><input type="text" ng-model="currUser.submitOrderNumber" style="text-align: center;"><br/><div style="font-size:16px;text-align:center;color:#eb4e53;">{{currUser.msg}}</div>', 
@@ -296,8 +298,12 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                                     .then((res: any) => {
                                         if(0 == res.code) {
                                             $scope.currUser.msg = successHint;
+                                        } else if(2 == res.code) {
+                                            $scope.currUser.msg = notExistHint;
+                                        } else if(3 == res.code) {
+                                            $scope.currUser.msg = alreadyExistHint;
                                         } else {
-                                            $scope.currUser.msg = failHint;
+                                            $scope.currUser.msg = otherErrHint;
                                         }
                                     }, (err: any) => {
                                         $scope.currUser.msg = serverErrHint;
