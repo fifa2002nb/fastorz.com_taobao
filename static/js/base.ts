@@ -335,6 +335,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         var successHint = "提交成功。";
         var failHint = "提交失败。";
         var serverErrHint = "服务器故障。";
+        var noPointsHint = "暂无可提现积分。";
         var myPopup = $ionicPopup.show({
             templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'points_clean.html',
             title: '积分提现',
@@ -346,12 +347,12 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     onTap: function(e) {
                         if ("" == $scope.personalData.alipayAccount) {
                             $scope.currUser.msg = accountHint;
-                            e.preventDefault();
+                        } else if (0 == $scope.currUser.shippedPoints) {
+                            $scope.currUser.msg = noPointsHint;
                         } else {
                             var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
                             if(!reg.test($scope.currUser.alipayAccount)) {
                                 $scope.currUser.msg = accountHint;
-                                e.preventDefault();
                             } else {
                                 var data = {openID: $scope.currUser.openID, alipayAccount: $scope.currUser.alipayAccount};
                                 $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/payorders", data)
@@ -364,9 +365,9 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                                     }, (err: any) => {
                                         $scope.currUser.msg = serverErrHint;
                                     });
-                                e.preventDefault();    
                             }
                         }
+                        e.preventDefault();
                     }
                 },
                 {
