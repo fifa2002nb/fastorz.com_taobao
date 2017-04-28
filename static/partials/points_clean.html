@@ -2,16 +2,22 @@
     输入【支付宝账号】，客服在1小时内提现【积分】到账户。（变现规则见【规则说明】）
 </div>
 <br/>
-<div style="font-size:16px;text-align:center;color:#eb4e53;" ng-show="currUser.onFail">
-    请输入有效【支付宝】账号，比如：xysmiracle@gmail.com。 
+<div style="font-size:16px;text-align:center;color:#eb4e53;">
+    {{currUser.msg}} 
 </div>
 <br/>
-<input type="text" ng-model="currUser.alipayAccount">
+<input type="text" ng-model="currUser.alipayAccount" style="text-align: center;">
 <br/>
 <table style="width:100%;">
+    <tr class="row header">
+        <th class="col">提现订单数</th>
+        <th class="col">可提现积分数</th>
+        <th class="col">可提现（元）</th>
+    </tr>
     <tr class="row">
-        <td class="col">可提现订单数：{{currUser.shippedCount}}</td>
-        <td class="col">可提现积分数：{{currUser.shippedPoints}}</td>
+        <td class="col">{{currUser.shippedCount}}</td>
+        <td class="col">{{currUser.shippedPoints}}</td>
+        <td class="col">{{currUser.shippedCash}}</td>
     </tr>
     <tr class="row header" ng-if="0<currUser.orders.length">
         <th class="col">订单日期</th>
