@@ -23,7 +23,7 @@ class GLOBAL_CONFIG{
     // for offline
     static offlineRouteUrlBase: string = '/static/templates/';
     static offlineTemplateUrlBase: string = '/static/partials/';
-    static offlineCMSBase: string = 'http://127.0.0.1:9000/';
+    static offlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
     // for now
     static nowRouteUrlBase: string = GLOBAL_CONFIG.onlineRouteUrlBase;
     static nowTemplateUrlBase: string = GLOBAL_CONFIG.onlineTemplateUrlBase;
@@ -81,6 +81,7 @@ interface IFastORZScope extends IRootScope {
     resourceFetcher: (url: string) => any;
     resourcePusher: (url: string, data: any) => any;
     scrollToTop: (whoseScroll: string) => void;
+    getScrollPosition: (whoseScroll: string) => void;
 }
 
 var fastorzControllers = angular.module('fastorzControllers', []);
@@ -109,7 +110,7 @@ fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '
     
     $scope.repeatDone = () => {
         $ionicSlideBoxDelegate.update();
-    }
+    };
   
     $scope.resourceFetcher = (url: string) => {
         var d = $q.defer();
@@ -127,7 +128,7 @@ fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '
 				d.reject(err);
 			});
 		return d.promise;
-    }
+    };
 
     $scope.resourcePusher = (url: string, data: any) => {
         var d = $q.defer();
@@ -150,7 +151,16 @@ fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '
 
     $scope.scrollToTop = (whoseScroll: string) => {
         $ionicScrollDelegate.$getByHandle(whoseScroll).scrollTop();
-    }
+    };
+    $scope.getScrollPosition = (whoseScroll: string) => {
+        var moveData = $ionicScrollDelegate.$getByHandle(whoseScroll).getScrollPosition().top;
+        console.log("position:" + moveData);
+        if(moveData >= 250) {
+            angular.element('.scrollToTop').fadeIn();     
+        } else if(moveData < 250) {
+            angular.element('.scrollToTop').fadeOut();
+        }
+    };
 }]);
 
 declare function escape(string: string): string;

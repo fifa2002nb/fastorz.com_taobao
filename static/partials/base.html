@@ -1,6 +1,6 @@
 <ion-tabs delegate-handle="fastTabs" class="tabs-positive tabs-icon-only">
     <ion-tab title="每日精选">
-        <ion-content lazy-scroll id="product">
+        <ion-content lazy-scroll id="product" on-scroll="getScrollPosition('productScroll')" delegate-handle="productScroll">
             <div ng-if="productSearch.searching" style="text-align: center;padding-top: 10px;">
                 <ion-spinner ng-if="productSearch.searching" icon="ios"></ion-spinner>
             </div>
@@ -46,7 +46,8 @@
             <ion-infinite-scroll immediate-check="false" on-infinite="productLoadMore()" ng-if="!productNoMoreData" icon="ion-load-d" distance="1%">
             </ion-infinite-scroll>
         </ion-content>    
-</ion-tab>
+        <div  class="scrollToTop" ng-click="scrollToTop('productScroll')"></div>
+    </ion-tab>
     <ion-tab title="达人潮玩" on-select="darenDoRefresh(false)">
         <ion-header-bar ng-if="darenStatus.showDetail">
             <div class="buttons">
@@ -105,7 +106,7 @@
                 <a class="item item-avatar" ng-click="">
                     <img src="http://gw.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_40x40.jpg"/>
                     <h2><span>{{currUser.openID}}</span></h2>
-                    <p>【可提现】返利：
+                    <p>可提现返利：
                         <span ng-hide="-1!=currUser.payingCashes">读取中...</span>
                         <span ng-show="-1!=currUser.payingCashes">{{currUser.shippedCashes}}</span>
                     </p>
