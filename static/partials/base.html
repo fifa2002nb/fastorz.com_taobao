@@ -105,29 +105,21 @@
                 <a class="item item-avatar" ng-click="">
                     <img src="http://gw.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_40x40.jpg"/>
                     <h2><span>{{currUser.openID}}</span></h2>
-                    <p>【可提现】积分：
-                        <span ng-hide="-1!=currUser.payingPoints">读取中...</span>
-                        <span ng-show="-1!=currUser.payingPoints">{{currUser.shippedPoints}}</span>
+                    <p>【可提现】返利：
+                        <span ng-hide="-1!=currUser.payingCashes">读取中...</span>
+                        <span ng-show="-1!=currUser.payingCashes">{{currUser.shippedCashes}}</span>
                     </p>
                 </a> 
-                <div class="item item-icon-right" ng-click="pointsPopup()">
-                    <span>积分详情</span>
-                    <i class="icon ion-ios-arrow-right"></i>
-                </div>
-                <!--<div class="item item-icon-right" ng-click="ordersPopup()">
-                    <span>订单详情</span>
-                    <i class="icon ion-ios-arrow-right"></i>
-                </div>-->
                 <div class="item item-icon-right" ng-click="addOrderPopup()">
                     <span>订单绑定</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
-                <div class="item item-icon-right" ng-click="cleanPointsPopup()">
-                    <span>积分提现</span>
+                <div class="item item-icon-right" ng-click="ordersPopup()">
+                    <span>订单详情</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
-                <div class="item item-icon-right" ng-click="showRules()">
-                    <span>变现规则</span>
+                <div class="item item-icon-right" ng-click="payCashesPopup()">
+                    <span>返利提现</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
                 <ion-item>

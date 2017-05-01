@@ -34,11 +34,9 @@ interface IBaseScope extends IFastORZScope {
     darenDetail: (id: number) => void;
     tmallIcon: string;
     personalData : any;
-    pointsPopup: () => void;
     ordersPopup: () => void;
     addOrderPopup: () => void;
-    cleanPointsPopup: () => void;
-    showRules: () => void;
+    payCashesPopup: () => void;
     refreshOrders: () => void;
     currUser: any;
     loginOrder: () => void;
@@ -56,7 +54,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.darenStatus = {showDetail: false, currDaren: null};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
     $scope.personalData = {orders: null};       
-    $scope.currUser = {openID: null, state: null, isAdmin: false, orders: null, shippedCount: -1, shippedPoints: -1, payingCount: -1, payingPoints: -1, paidCount: -1, paidPoints: -1, submitOrderNumber: null, msg: "", alipayAccount: null, shippedCash: -1};
+    $scope.currUser = {openID: null, state: null, isAdmin: false, orders: null, shippedCount: -1, shippedCashes: -1, payingCount: -1, payingCashes: -1, paidCount: -1, paidCashes: -1, submitOrderNumber: null, msg: "", alipayAccount: null};
     $scope.currUser.openID = angular.element('#openID').attr("alt");
     $scope.currUser.state = angular.element('#state').attr("alt");
 
@@ -65,14 +63,17 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/searchorders", data)
             .then((res: any) => {
                 if(0 == res.code && res.result) {
-                    $scope.currUser.orders = res.result.orders;
+                    $scope.currUser.orders = [];
+                    for (var i = 0; i < res.result.orders.length; i++) {
+                        res.result.orders[i].cashes = res.result.orders[i].cashes.toFixed(1);
+                        $scope.currUser.orders.push(res.result.orders[i]);
+                    }
                     $scope.currUser.shippedCount = res.result.shippedCount;
-                    $scope.currUser.shippedPoints = res.result.shippedPoints;
-                    $scope.currUser.shippedCash = (res.result.shippedPoints /100).toFixed(1);
+                    $scope.currUser.shippedCashes = res.result.shippedCashes.toFixed(1);
                     $scope.currUser.payingCount = res.result.payingCount;
-                    $scope.currUser.payingPoints = res.result.payingPoints;
+                    $scope.currUser.payingCashes = res.result.payingCashes.toFixed(1);
                     $scope.currUser.paidCount = res.result.paidCount;
-                    $scope.currUser.paidPoints = res.result.paidPoints;
+                    $scope.currUser.paidCashes = res.result.paidCashes.toFixed(1);
                 } else {
                     console.log(res);
                 }
@@ -240,20 +241,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 console.log(err)
             });
     }
-    $scope.pointsPopup = () => {
-        $scope.refreshOrders();
-        var myPopup = $ionicPopup.show({
-            templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'points.html', 
-            title: '积分详情',
-            scope: $scope,
-            buttons: [
-                {
-                    text: '<b>确定</b>',
-                    type: 'button-assertive',
-                },
-            ]
-        });
-    }
     $scope.ordersPopup = () => {
         $scope.refreshOrders();
         var myPopup = $ionicPopup.show({
@@ -320,31 +307,18 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             ],
         });
     }
-    $scope.showRules = () => {
-        var myPopup = $ionicPopup.show({
-            template: '<div style="font-size:16px;text-align:center;">100积分 = 1元人民币</div>', 
-            title: '积分变现规则',
-            scope: $scope,
-            buttons: [
-                {
-                    text: '<b>知道了</b>',
-                    type: 'button-assertive',
-                }
-            ],
-        });
-    }
 
-    $scope.cleanPointsPopup = () => {
+    $scope.payCashesPopup = () => {
         $scope.refreshOrders();
         $scope.currUser.msg = "";
         var accountHint = "请输入有效【支付宝】账号，比如：xysmiracle@gmail.com。";
         var successHint = "提交成功。";
         var failHint = "提交失败。";
         var serverErrHint = "服务器故障。";
-        var noPointsHint = "暂无可提现积分。";
+        var noCashesHint = "暂无可提现金额。";
         var myPopup = $ionicPopup.show({
-            templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'points_clean.html',
-            title: '积分提现',
+            templateUrl: GLOBAL_CONFIG.nowTemplateUrlBase + 'paycashes.html',
+            title: '返利提现',
             scope: $scope,
             buttons: [
                 {
@@ -353,8 +327,8 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     onTap: function(e) {
                         if ("" == $scope.personalData.alipayAccount) {
                             $scope.currUser.msg = accountHint;
-                        } else if (0 == $scope.currUser.shippedPoints) {
-                            $scope.currUser.msg = noPointsHint;
+                        } else if (0 == $scope.currUser.shippedCahes) {
+                            $scope.currUser.msg = noCashesHint;
                         } else {
                             var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
                             if(!reg.test($scope.currUser.alipayAccount)) {

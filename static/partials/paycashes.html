@@ -1,5 +1,5 @@
 <div style="font-size:16px;text-align:center;">
-    输入【支付宝账号】，客服在1小时内提现【积分】到账户。（变现规则见【规则说明】）
+    输入【支付宝账号】，客服在1小时内提现【返利】到账户。
 </div>
 <br/>
 <div style="font-size:16px;text-align:center;color:#eb4e53;">
@@ -9,26 +9,24 @@
 <input type="text" ng-model="currUser.alipayAccount" style="text-align: center;">
 <br/>
 <table style="width:100%;">
-    <tr class="row header">
-        <th class="col">提现订单数</th>
-        <th class="col">可提现积分数</th>
+    <tr class="row header" >
+        <th class="col">可提现订单数</th>
         <th class="col">可提现（元）</th>
     </tr>
-    <tr class="row">
+    <tr class="row" style="text-align:center;">
         <td class="col">{{currUser.shippedCount}}</td>
-        <td class="col">{{currUser.shippedPoints}}</td>
-        <td class="col">{{currUser.shippedCash}}</td>
+        <td class="col">{{currUser.shippedCashes}}</td>
     </tr>
     <tr class="row header" ng-if="0<currUser.orders.length">
         <th class="col">订单日期</th>
         <th class="col">订单号码</th>
         <th class="col">订单状态</th>
-        <th class="col">订单积分</th>
+        <th class="col">订单返利</th>
     </tr>
     <tr class="row" ng-repeat="order in currUser.orders">
         <td class="col" ng-show="'可提现'==order.state">{{order.date}}</td>
         <td class="col" ng-show="'可提现'==order.state">{{order.orderNumber}}</td>
         <td class="col" ng-show="'可提现'==order.state">{{order.state}}</td>
-        <td class="col" ng-show="'可提现'==order.state">{{order.points}}</td>
+        <td class="col" ng-show="'可提现'==order.state">{{order.cashes}}</td>
     </tr>
 </table>
