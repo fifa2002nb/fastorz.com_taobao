@@ -327,7 +327,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     onTap: function(e) {
                         if ("" == $scope.personalData.alipayAccount) {
                             $scope.currUser.msg = accountHint;
-                        } else if (0 == $scope.currUser.shippedCahes) {
+                        } else if (0 == $scope.currUser.shippedCashes) {
                             $scope.currUser.msg = noCashesHint;
                         } else {
                             var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
