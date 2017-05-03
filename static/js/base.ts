@@ -325,27 +325,25 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                     text: '<b>提交</b>',
                     type: 'button-assertive',
                     onTap: function(e) {
-                        if ("" == $scope.personalData.alipayAccount) {
+                        var reg = /(^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$)|([0-9]{11})/;
+                        if (!reg.test($scope.currUser.alipayAccount)) {
+                            $scope.currUser.msg = accountHint;
+                        } else if ("" == $scope.personalData.alipayAccount) {
                             $scope.currUser.msg = accountHint;
                         } else if (0 == $scope.currUser.shippedCashes) {
                             $scope.currUser.msg = noCashesHint;
                         } else {
-                            var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
-                            if(!reg.test($scope.currUser.alipayAccount)) {
-                                $scope.currUser.msg = accountHint;
-                            } else {
-                                var data = {openID: $scope.currUser.openID, alipayAccount: $scope.currUser.alipayAccount};
-                                $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/payorders", data)
-                                    .then((res: any) => {
-                                        if(0 == res.code) {
-                                            $scope.currUser.msg = successHint;
-                                        } else {
-                                            $scope.currUser.msg = failHint;
-                                        }
-                                    }, (err: any) => {
-                                        $scope.currUser.msg = serverErrHint;
-                                    });
-                            }
+                            var data = {openID: $scope.currUser.openID, alipayAccount: $scope.currUser.alipayAccount};
+                            $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/payorders", data)
+                                .then((res: any) => {
+                                    if(0 == res.code) {
+                                        $scope.currUser.msg = successHint;
+                                    } else {
+                                        $scope.currUser.msg = failHint;
+                                    }
+                                }, (err: any) => {
+                                    $scope.currUser.msg = serverErrHint;
+                                });
                         }
                         e.preventDefault();
                     }
