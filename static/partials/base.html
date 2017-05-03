@@ -123,6 +123,14 @@
                     <span>返利提现</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
+                <div class="item item-icon-right" ng-if="null != currUser.refOpenIDs" ng-click="refUsersPopup()">
+                    <span>推荐列表</span>
+                    <i class="icon ion-ios-arrow-right"></i>
+                </div>
+                <div class="item item-icon-right" ng-if="null != currUser.refOpenIDs" ng-click="refOrdersPopup()">
+                    <span>推荐奖励</span>
+                    <i class="icon ion-ios-arrow-right"></i>
+                </div>
                 <ion-item>
                     联系客服
                     <span class="item-note">微信号：xysmiracle</span>

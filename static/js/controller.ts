@@ -154,7 +154,6 @@ fastorzControllers.controller('FastORZCtrl', ['$scope', '$translate', '$http', '
     };
     $scope.getScrollPosition = (whoseScroll: string) => {
         var moveData = $ionicScrollDelegate.$getByHandle(whoseScroll).getScrollPosition().top;
-        console.log("position:" + moveData);
         if(moveData >= 250) {
             angular.element('.scrollToTop').fadeIn();     
         } else if(moveData < 250) {
