@@ -47,7 +47,7 @@ interface IBaseScope extends IFastORZScope {
 
 fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', '$ionicTabsDelegate', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService, $ionicTabsDelegate: ionic.tabs.IonicTabsDelegate){
     $scope.productItems = [];
-    $scope.productSearch = {searchKey: "", searching: false, searchLimit: 12, searchType: Math.round(Math.random() * 30)};
+    $scope.productSearch = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
     $scope.productBase = 0;
     $scope.productNoMoreData = false;
     $scope.darenItems = [];
