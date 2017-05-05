@@ -428,6 +428,8 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         if('' != $scope.currUser.openID) {
             angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(8)").remove();
             if('userCenter' == $scope.currUser.state) {
+                angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(5)").remove();
+                angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(5)").remove(); 
                 $ionicTabsDelegate.$getByHandle("fastTabs").select(2);
             } else if('dailyProducts' == $scope.currUser.state) {
                 $ionicTabsDelegate.$getByHandle("fastTabs").select(0);
