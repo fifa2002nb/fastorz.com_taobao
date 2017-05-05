@@ -262,7 +262,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     };
     $scope.refUsersPopup = () => {
         var myPopup = $ionicPopup.show({
-            template: '<table style="width:100%;"><tr class="row"><th class="col">粉丝数：{{currUser.refOpenIDs.length}}</th></tr></table>以下粉丝每次购物10%的返利记录到您的账户<table style="width:100%;"><tr class="row header"><th class="col">OpenID</th><tr class="row" ng-repeat="openID in currUser.refOpenIDs"><td class="col">{{openID}}</td></tr></table>',
+        template: '<table style="width:100%;"><tr class="row"><th class="col">粉丝数：{{currUser.refOpenIDs.length}}</th></tr></table><div style="width:100%;">以下粉丝每次购物10%的返利记录到您的账户</div><table style="width:100%;"><tr class="row header"><th class="col">OpenID</th><tr class="row" ng-repeat="openID in currUser.refOpenIDs"><td class="col">{{openID}}</td></tr></table>',
             title: '推荐的粉丝列表',
             scope: $scope,
             buttons: [
@@ -282,7 +282,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             buttons: [
                 {
                     text: '<b>知道了</b>',
-                    type: 'button-assertive',
+                    type: 'button-normal',
                 },
             ]
         });
