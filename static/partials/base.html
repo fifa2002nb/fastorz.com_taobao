@@ -101,7 +101,7 @@
         <ion-header-bar>
             <h1 class="title">个人中心</h1>
         </ion-header-bar>
-        <ion-content class="content" style="padding: 4px;">
+        <ion-content overflow-scroll="true" class="content" style="padding: 4px;">
             <ion-list>
                 <a class="item item-avatar" ng-click="">
                     <img src="http://gw.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_40x40.jpg"/>
@@ -131,13 +131,13 @@
                     <span>推荐奖励</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
-                <ion-item class="selectable">
+                <ion-item ng-click="customerServicePopup(1)">
                     联系客服1
-                    <span class="item-note">微信号：fenghanzi996</span>
+                    <span class="item-note">微信：fenghanzi996</span>
                 </ion-item>
-                <ion-item class="selectable">
+                <ion-item ng-click="customerServicePopup(2)">
                     联系客服2
-                    <span class="item-note">微信号：xysmiracle</span>
+                    <span class="item-note">微信：xysmiracle</span>
                 </ion-item>
             </ion-list>
         </ion-content>
