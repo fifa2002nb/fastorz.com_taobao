@@ -190,7 +190,7 @@ ul.list {
     height: 40px;
     width: 40px;
     position: fixed;
-    bottom: 11%;
+    bottom: 10%;
     right: 5%; 
     z-index: 1000;
     display:none;
