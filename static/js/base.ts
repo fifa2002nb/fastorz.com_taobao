@@ -58,7 +58,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.darenStatus = {showDetail: false, currDaren: null};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
     $scope.personalData = {orders: null};       
-    $scope.currUser = {openID: null, state: null, isAdmin: false, orders: null, shippedCount: -1, shippedCashes: -1, payingCount: -1, payingCashes: -1, paidCount: -1, paidCashes: -1, submitOrderNumber: null, msg: "", alipayAccount: null, refOpenIDs: null, refOrders: null, customerServiseUrl: null};
+    $scope.currUser = {openID: null, state: null, isAdmin: false, orders: null, shippedCount: -1, shippedCashes: -1, payingCount: -1, payingCashes: -1, paidCount: -1, paidCashes: -1, submitOrderNumber: null, msg: "", nickname: null, headimgurl: null, alipayAccount: null, refNicknames: null, refOpenIDs: null, refOrders: null, customerServiseUrl: null};
     $scope.currUser.openID = angular.element('#openID').attr("alt");
     $scope.currUser.state = angular.element('#state').attr("alt");
 
@@ -90,7 +90,10 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/godlogin", data)
             .then((res: any) => {
                 if(0 == res.code) {
+                    $scope.currUser.nickname = res.result.nickname;
+                    $scope.currUser.headimgurl = res.result.headimgurl;
                     $scope.currUser.alipayAccount = res.result.alipayAccount;
+                    $scope.currUser.refNicknames = res.result.refNicknames;
                     $scope.currUser.refOpenIDs = res.result.refOpenIDs;
                     $scope.refreshOrders();
                 } else {

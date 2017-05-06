@@ -104,8 +104,8 @@
         <ion-content overflow-scroll="true" class="content" style="padding: 4px;">
             <ion-list>
                 <a class="item item-avatar" ng-click="">
-                    <img src="http://gw.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_40x40.jpg"/>
-                    <h2><span>{{currUser.openID}}</span></h2>
+                    <img ng-src="{{currUser.headimgurl}}"/>
+                    <h2><span>{{currUser.nickname}}</span></h2>
                     <p>可提现返利：
                         <span ng-hide="-1!=currUser.payingCashes">读取中...</span>
                         <span ng-show="-1!=currUser.payingCashes">{{currUser.shippedCashes}}</span>
