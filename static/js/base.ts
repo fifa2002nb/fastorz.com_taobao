@@ -331,7 +331,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.currUser.msg = "";
         var hint = "输入有效订单号。";
         var successHint = "提交成功。";
-        var notExistHint = "订单不存在，请5分钟后再试。";
+        var notExistHint = "订单正在同步中，预计还需5分钟。";
         var alreadyExistHint = "订单已存在，请勿重复提交。";
         var otherErrHint = "其他错误。";
         var serverErrHint = "服务器故障。";
