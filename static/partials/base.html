@@ -123,7 +123,7 @@
                     <span>返利提现</span>
                     <i class="icon ion-ios-arrow-right"></i>
                 </div>
-                <ion-item class="item-divider item-gap">
+                <ion-item class="item-divider item-gap" ng-if="null != currUser.refOpenIDs">
                 </ion-item>
                 <div class="item item-icon-right" ng-if="null != currUser.refOpenIDs" ng-click="refUsersPopup()">
                     <span>推荐列表</span>
