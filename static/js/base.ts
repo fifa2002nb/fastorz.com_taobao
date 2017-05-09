@@ -434,6 +434,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(6)").remove();
                 angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(5)").remove(); 
                 $ionicTabsDelegate.$getByHandle("fastTabs").select(2);
+                angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs").hide();
             } else if('dailyProducts' == $scope.currUser.state) {
                 $ionicTabsDelegate.$getByHandle("fastTabs").select(0);
             } else {
