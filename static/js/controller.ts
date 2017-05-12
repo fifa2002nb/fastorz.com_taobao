@@ -31,11 +31,11 @@ class GLOBAL_CONFIG{
 }
    
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', '$ionicConfigProvider', function($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider, $translateProvider: angular.translate.ITranslateProvider, $httpProvider: ng.IHttpProvider, $ionicConfigProvider: ionic.utility.IonicConfigProvider){
-    $locationProvider.html5Mode({enabled: true, requireBase: false}); //html5 mode
-    $urlRouterProvider.otherwise(GLOBAL_CONFIG.nowRouteUrlBase); // for path rewriter
+    //$locationProvider.html5Mode({enabled: true, requireBase: false}); //html5 mode
+    $urlRouterProvider.otherwise("/"); // for path rewriter
     $stateProvider.
         state('sodeyixia', {
-            url: GLOBAL_CONFIG.nowRouteUrlBase,              
+            url: "/:keywords",              
             data: {
                 title: 'sodeyixia',
             }, 
