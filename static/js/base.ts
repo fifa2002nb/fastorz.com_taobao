@@ -430,7 +430,6 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.productDoRefresh(false);
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         if('' != $scope.currUser.openID) {
-            angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(8)").remove();
             if('userCenter' == $scope.currUser.state) {
                 angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(6)").remove();
                 angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(5)").remove(); 

@@ -43,18 +43,18 @@
                     </li>
                 </ul>'
             ></div>
-            <ion-infinite-scroll immediate-check="false" on-infinite="productLoadMore()" ng-if="!productNoMoreData" icon="ion-load-d" distance="5%">
+            <ion-infinite-scroll immediate-check="false" on-infinite="productLoadMore()" ng-if="!productNoMoreData" icon="ion-load-d" distance="1%">
             </ion-infinite-scroll>
         </ion-content>    
         <div  class="scrollToTop" ng-click="scrollToTop('productScroll')"></div>
     </ion-tab>
-    <ion-tab title="宝贝搜索" on-select="darenDoRefresh(false)">
+    <ion-tab title="达人潮玩" on-select="darenDoRefresh(false)">
         <ion-header-bar ng-if="darenStatus.showDetail">
             <div class="buttons">
                 <button class="button icon-left ion-chevron-left button-clear button-dark"
                         ng-click="darenStatus.showDetail=false">Back</button>
             </div>
-            <h1 class="title">优惠券详情</h1>
+            <h1 class="title">达人详情</h1>
         </ion-header-bar>
         <ion-content ng-show="darenStatus.showDetail" style="padding-top:47px; padding-left:4px; padding-right:4px; padding-bottom:4px;" delegate-handle="darenDetailScroll">
             <ion-list>
@@ -65,18 +65,18 @@
                 </ion-item>
             </ion-list>
         </ion-content>
-        <ion-content lazy-scroll ng-show="!darenStatus.showDetail" on-scroll="getScrollPosition('darenScroll')" delegate-handle="darenScroll">
-            <div ng-if="productSearch.searching" style="text-align: center;padding-top: 10px;">
-                <ion-spinner ng-if="productSearch.searching" icon="ios"></ion-spinner>
+        <ion-header-bar ng-if="!darenStatus.showDetail">
+            <h1 class="title">达人分享</h1>
+            <div class="buttons">
+                <button class="button button-clear button-dark" ng-click="scrollToTop('darenScroll')">
+                    TOP
+                    <button class="button button-clear button-dark ion-chevron-up"></button>
+                </button>
             </div>
-            <div class="taobao-header">
-                <div class="list">
-                    <label class="item item-input">
-                        <i class="icon ion-search placeholder-icon"></i>
-                        <input type="text" placeholder="输入关键词搜索" ng-model="productSearch.searchKey" ng-enter="productDoRefresh(true)">
-                     </label>
-                </div>
-            </div>
+        </ion-header-bar>
+        <ion-content lazy-scroll ng-show="!darenStatus.showDetail" style="padding-top:41px;" delegate-handle="darenScroll">
+            <ion-refresher pulling-text="下拉更新..." on-refresh="darenDoRefresh(false)">
+            </ion-refresher>
             <div deckgrid class="deckgrid" source="darenItems" cardTemplateString='
                 <ul class="list">
                     <li class="eslite-border" ng-click="mother.darenDetail({{card.id}})">
@@ -96,7 +96,6 @@
             <ion-infinite-scroll immediate-check="false" on-infinite="darenLoadMore()" ng-if="!darenNoMoreData" icon="ion-load-d" distance="1%">
             </ion-infinite-scroll>
         </ion-content>    
-        <div  class="scrollToTop" ng-click="scrollToTop('darenScroll')"></div>
     </ion-tab>
     <ion-tab title="个人中心">
         <ion-header-bar>
@@ -143,6 +142,22 @@
                 <ion-item ng-click="customerServicePopup(2)">
                     联系客服2
                     <span class="item-note">微信：xysmiracle</span>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-tab>
+    <ion-tab title="返利中心">
+        <ion-header-bar>
+            <h1 class="title">返利公众号</h1>
+        </ion-header-bar>
+        <ion-content overflow-scroll="true" class="content" style="padding: 4px;">
+            <ion-list>
+                <ion-item class="text-center">
+                    <div class="selectable">
+                        关注【淘宝返利】<br/>
+                        <img src="http://7fvbl4.com1.z0.glb.clouddn.com/qrcode.jpg" style="width:50%;"/>
+                        <br/>微信公众号：xiaodianyouxiedi
+                    </div>
                 </ion-item>
             </ion-list>
         </ion-content>

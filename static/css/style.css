@@ -187,8 +187,8 @@ ul.list {
     -webkit-user-select: auto;
 }
 .scrollToTop{
-    height: 35px;
-    width: 35px;
+    height: 32px;
+    width: 32px;
     position: fixed;
     bottom: 10%;
     right: 5%; 
