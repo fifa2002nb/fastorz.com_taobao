@@ -431,7 +431,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         if('' != $scope.currUser.openID) {
             if('userCenter' == $scope.currUser.state) {
-                angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(6)").remove();
+                angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(4)").remove();
                 angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(5)").remove(); 
                 $ionicTabsDelegate.$getByHandle("fastTabs").select(2);
                 angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs").hide();
@@ -441,7 +441,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 $ionicTabsDelegate.$getByHandle("fastTabs").select(1);    
             }
         } else {
-            angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(7)").remove();
+            angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(6)").remove();
         }
     });
 }]);
