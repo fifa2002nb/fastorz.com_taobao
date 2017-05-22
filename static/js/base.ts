@@ -8,11 +8,24 @@ class productItem {
     quan:           string;
 }
 
-class darenItem {
-    id:         number;
-    title:      string;
-    image:      string;
-    content:    string;
+class baobeiItem {
+    pictUrl:         string;
+    title:          string;
+    auctionId:      number;
+    tkRate:         number;
+    tkCommFee:      number;
+    biz30day:       number;
+    zkPrice:        number;
+    couponAmount:   number;
+    couponInfo:     string;
+    couponStartFee: number;
+}
+
+class baobeiFanli {
+    taoToken:           string;
+    shortLinkUrl:       string;
+    couponLinkTaoToken: string;
+    couponShortLinkUrl: string;
 }
 
 interface IBaseScope extends IFastORZScope {
@@ -24,14 +37,14 @@ interface IBaseScope extends IFastORZScope {
     productDoRefresh: (searching: boolean) => void;
     productLoadMore: () => void;
     productShowPopup: (quan: string) => void;
-    darenStatus: any;
-    darenNoMoreData: boolean;
-    darenBase: number;
-    darenItems: darenItem[];
-    darenSearch: any;
-    darenDoRefresh: (searching: boolean) => void;
-    darenLoadMore: () => void;
-    darenDetail: (id: number) => void;
+    baobeiStatus: any;
+    baobeiItems: baobeiItem[];
+    baobeiSearch: any;
+    baobeiDoRefresh: () => void;
+    baobeiDetail: (index: number) => void;
+    baobeiShowPopup: (quan: string, taokey: boolean) => void;
+    goBaobeiDetail: () => void;
+    leaveBaobeiDetail: () => void;
     tmallIcon: string;
     personalData : any;
     ordersPopup: () => void;
@@ -48,15 +61,13 @@ interface IBaseScope extends IFastORZScope {
 
 fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', '$ionicTabsDelegate', '$stateParams', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService, $ionicTabsDelegate: ionic.tabs.IonicTabsDelegate, $stateParams: ng.ui.IStateParamsService){
     $scope.productItems = [];
-    $scope.productSearch = {searchKey: $stateParams['keywords'], searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
+    $scope.productSearch = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
     console.log($scope.productSearch);
     $scope.productBase = 0;
     $scope.productNoMoreData = false;
-    $scope.darenItems = [];
-    $scope.darenSearch = {searchKey: "", searching: false, searchLimit: 12, searchType: Math.round(Math.random() * 30)};
-    $scope.darenBase = 0;
-    $scope.darenNoMoreData = false;
-    $scope.darenStatus = {showDetail: false, currDaren: null};
+    $scope.baobeiStatus = {showDetail: false, currBaobei: null};
+    $scope.baobeiItems = [];
+    $scope.baobeiSearch = {query: $stateParams['keywords'], searching: false};
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
     $scope.personalData = {orders: null};       
     $scope.currUser = {openID: null, state: null, isAdmin: false, orders: null, shippedCount: -1, shippedCashes: -1, payingCount: -1, payingCashes: -1, paidCount: -1, paidCashes: -1, submitOrderNumber: null, msg: "", nickname: null, headimgurl: null, alipayAccount: null, refNicknames: null, refOpenIDs: null, refOrders: null, customerServiseUrl: null};
@@ -167,7 +178,25 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 $scope.$broadcast("scroll.infiniteScrollComplete")
             });
     }
-    
+
+    $scope.baobeiShowPopup = (quan: string, taokey: boolean) => {
+        if(taokey) {
+            var myPopup = $ionicPopup.show({
+                template: '<div style="font-size:16px;text-align:center;">请打开【手机淘宝APP】领券下单。</div>',
+                title: '已复制淘口令',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>知道了</b>',
+                        type: 'button-assertive',
+                    }
+                ]
+            });
+        } else {
+            $window.open(quan);
+        }
+    }
+   
     $scope.productShowPopup = (quan: string) => {
         if("pc" != $scope.deviceType) {
             var myPopup = $ionicPopup.show({
@@ -186,63 +215,48 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         }
     }
 
-    $scope.darenDoRefresh = (searching: boolean) => {
-        if(!searching) {
-            $scope.darenSearch.searchType = Math.round(Math.random() * 30);
-        }
-        $scope.darenStatus.showDetail = false;
-        $scope.darenNoMoreData = false;
-        $scope.darenSearch.searching = searching;
-        $scope.darenBase = 0;
-        var data = {key: $scope.darenSearch.searchKey, type: $scope.darenSearch.searchType, base: $scope.darenBase, limit: $scope.darenSearch.searchLimit, device: $scope.deviceType};
-        $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/darens", data)
+    $scope.baobeiDoRefresh = () => {
+        $scope.baobeiStatus.showDetail = false;
+        $scope.baobeiSearch.searching = true;
+        var data = {username: "fastorz", query: $scope.baobeiSearch.query, step: 1};
+        $scope.resourcePusher(GLOBAL_CONFIG.nowTkeymakerBase + "v1/promotion/syn", data)
             .then((res: any) => {
                 if(0 == res.code) {
-                    $scope.darenItems = res.result;
-                    if($scope.darenSearch.searchLimit > $scope.darenItems.length) {
-                        $scope.darenNoMoreData = true;
-                    }
+                    $scope.baobeiItems = res.result.pageList;
+                    $scope.baobeiSearch.searching = false;
                 } else {
+                    $scope.baobeiSearch.searching = false;
                     console.log(res.result);
                 }
-                $scope.darenBase = 1;
-                $scope.$broadcast("scroll.refreshComplete");
-                $scope.darenSearch.searching = false;
             }, (err: any) => {
-                $scope.$broadcast("scroll.refreshComplete");
-                $scope.darenSearch.searching = false;
-            });
-    }
-    
-    $scope.darenLoadMore = () => {
-        $scope.darenStatus.showDetail = false;
-        $scope.darenNoMoreData = false;
-        var data = {key: $scope.darenSearch.searchKey, type: $scope.darenSearch.searchType, base: $scope.darenBase, limit: $scope.darenSearch.searchLimit, device: $scope.deviceType};
-        $scope.resourcePusher(GLOBAL_CONFIG.nowCMSBase + "v1/darens", data)
-            .then((res: any) => {
-                if(0 == res.code) {
-                    if($scope.darenSearch.searchLimit > res.result.length) {
-                        $scope.darenNoMoreData = true;
-                    }
-                    for(var i = 0; i < res.result.length; i++) {
-                        $scope.darenItems.push(res.result[i]);
-                    }
-                }
-                $scope.darenBase++;
-                $scope.$broadcast("scroll.infiniteScrollComplete");
-            }, (err: any) => {
-                $scope.$broadcast("scroll.infiniteScrollComplete")
+                $scope.baobeiSearch.searching = false;
+                console.log(err);
             });
     }
 
-    $scope.darenDetail = (id: number) => {
-        $scope.scrollToTop("darenDetailScroll");
-        $scope.darenStatus.showDetail = true;
-        $scope.darenStatus.currDaren = null;
-        $scope.resourceFetcher(GLOBAL_CONFIG.nowCMSBase + "v1/daren?id=" + id)
+    $scope.goBaobeiDetail = () => {
+        $scope.baobeiStatus.showDetail = true;
+        angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs").hide();
+    }
+    $scope.leaveBaobeiDetail = () => {
+        $scope.baobeiStatus.showDetail = false;
+        angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs").show();
+    }
+
+    $scope.baobeiDetail = (index: number) => {
+        $scope.goBaobeiDetail();
+        $scope.baobeiStatus.showDetail = true;
+        $scope.baobeiStatus.currBaobei = null;
+        var item = $scope.baobeiItems[index];
+        if (null == item) {
+            return;
+        }
+        var data = {username: "fastorz", step: 2, auctionId: item.auctionId};
+        $scope.resourcePusher(GLOBAL_CONFIG.nowTkeymakerBase + "v1/promotion/syn", data)
             .then((res: any) => {
                 if(0 == res.code) {
-                    $scope.darenStatus.currDaren = res.result;
+                    $scope.baobeiStatus.currBaobei = {item: $scope.baobeiItems[index], fanli: res.result};
+                    console.log($scope.baobeiStatus.currBaobei);
                 } else {
                     console.log(res);
                 }
@@ -250,6 +264,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 console.log(err)
             });
     };
+
     $scope.ordersPopup = () => {
         $scope.refreshOrders();
         var myPopup = $ionicPopup.show({
@@ -435,13 +450,14 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
                 angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(5)").remove(); 
                 $ionicTabsDelegate.$getByHandle("fastTabs").select(2);
                 angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs").hide();
-            } else if('dailyProducts' == $scope.currUser.state) {
-                $ionicTabsDelegate.$getByHandle("fastTabs").select(0);
-            } else {
-                $ionicTabsDelegate.$getByHandle("fastTabs").select(1);    
             }
         } else {
             angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs > a:nth-child(6)").remove();
+            if('dailyProducts' == $scope.currUser.state) {
+                $ionicTabsDelegate.$getByHandle("fastTabs").select(0);
+            } else if('baobei' == $scope.currUser.state){
+                $ionicTabsDelegate.$getByHandle("fastTabs").select(1);    
+            }
         }
     });
 }]);

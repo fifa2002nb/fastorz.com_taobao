@@ -48,55 +48,84 @@
         </ion-content>    
         <div  class="scrollToTop" ng-click="scrollToTop('productScroll')"></div>
     </ion-tab>
-    <ion-tab title="宝贝搜索" on-select="darenDoRefresh(false)">
-        <ion-header-bar ng-if="darenStatus.showDetail">
+    <ion-tab title="宝贝搜索" on-select="baobeiDoRefresh()">
+        <ion-header-bar ng-if="baobeiStatus.showDetail">
             <div class="buttons">
                 <button class="button icon-left ion-chevron-left button-clear button-dark"
-                        ng-click="darenStatus.showDetail=false">Back</button>
+                        ng-click="leaveBaobeiDetail()">Back</button>
             </div>
             <h1 class="title">优惠券详情</h1>
         </ion-header-bar>
-        <ion-content ng-show="darenStatus.showDetail" style="padding-top:47px; padding-left:4px; padding-right:4px; padding-bottom:4px;" delegate-handle="darenDetailScroll">
+        <ion-content ng-show="baobeiStatus.showDetail" style="padding-top:47px; padding-left:4px; padding-right:4px; padding-bottom:4px;">
             <ion-list>
                 <ion-item>
-                    <h2 class="text-center">{{darenStatus.currDaren.title}}</h2>
+                    <h2 class="text-center" ng-bind-html="baobeiStatus.currBaobei.item.title"></h2>
                     <br/>
-                    <div ng-bind-html="darenStatus.currDaren.content" class="item-detail"></div>
+                    <div class="item-detail">
+                        <img ng-src="{{baobeiStatus.currBaobei.item.pictUrl}}" width="100%;">
+                        <br/>
+                        <div class="sell-price">
+                            <p class="item-discount-price">原价：<i>{{baobeiStatus.currBaobei.item.zkPrice}}元</i></p>
+                            <p class="item-discount-price">优惠券：<i>{{baobeiStatus.currBaobei.item.couponAmount}}元</i></p>
+                            <p class="item-save-price">返利：<i>{{baobeiStatus.currBaobei.item.tkCommFee}}元</i></p>
+                        </div>
+                        <div class="sell-price">
+                            <span class="mail-icon">包邮</span>
+                            <span class="item-sell-num">月销量{{baobeiStatus.currBaobei.item.biz30day}}</span>
+                        </div>
+                        <button style="width:49%;" class="button button-energized" ng-click="baobeiShowPopup(baobeiStatus.currBaobei.fanli.shortLinkUrl, false)">
+                            浏览器购买
+                        </button>
+                        <button style="width:49%;" class="button button-assertive" ng-click="baobeiShowPopup(baobeiStatus.currBaobei.fanli.taoToken, true)" data-clipboard-action="copy" data-clipboard-text="{{baobeiStatus.currBaobei.fanli.taoToken}}">
+                            淘口令购买
+                        </button>
+                    </div>
                 </ion-item>
             </ion-list>
         </ion-content>
-        <ion-content lazy-scroll ng-show="!darenStatus.showDetail" on-scroll="getScrollPosition('darenScroll')" delegate-handle="darenScroll">
-            <div ng-if="productSearch.searching" style="text-align: center;padding-top: 10px;">
-                <ion-spinner ng-if="productSearch.searching" icon="ios"></ion-spinner>
+        <ion-content lazy-scroll ng-show="!baobeiStatus.showDetail" on-scroll="getScrollPosition('baobeiScroll')" delegate-handle="baobeiScroll">
+            <div ng-if="baobeiSearch.searching" style="text-align: center;padding-top: 10px;">
+                <ion-spinner ng-if="baobeiSearch.searching" icon="ios"></ion-spinner>
             </div>
             <div class="taobao-header">
                 <div class="list">
                     <label class="item item-input">
                         <i class="icon ion-search placeholder-icon"></i>
-                        <input type="text" placeholder="输入关键词搜索" ng-model="productSearch.searchKey" ng-enter="productDoRefresh(true)">
+                        <input type="text" placeholder="输入关键词搜索" ng-model="baobeiSearch.query" ng-enter="baobeiDoRefresh()">
                      </label>
                 </div>
             </div>
-            <div deckgrid class="deckgrid" source="darenItems" cardTemplateString='
+            <div deckgrid class="deckgrid" source="baobeiItems" cardTemplateString='
                 <ul class="list">
-                    <li class="eslite-border" ng-click="mother.darenDetail({{card.id}})">
+                    <li class="eslite-border" ng-click="mother.baobeiDetail({{card.$index}})">
                         <div class="img-container">
-                            <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" image-lazy-src="{{card.image}}" image-lazy-distance-from-bottom-to-load="200"/>
+                            <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg" image-lazy-src="http:{{card.pictUrl}}_200x200.jpg" image-lazy-distance-from-bottom-to-load="200"/>
                         </div>
                         <div class="bottom-panel">
                             <div class="spotlite-name">
                                 <div class="name">
-                                    {{card.title}}
+                                    <img class="tmall-icon" src="http://auz.qnl1.com/open/quan/images/taobao.png">
+                                    <span ng-bind-html="card.title"></span>
                                 </div>
                             </div>
+                            <div class="sell-price">
+                                <p class="item-discount-price">原价：<i>{{card.zkPrice}}元</i></p>
+                                <p class="item-discount-price">优惠券：<i>{{card.couponAmount}}元</i></p>
+                                <p class="item-save-price">返利：<i>{{card.tkCommFee}}元</i></p>
+                            </div>
+                            <div class="sell-price">
+                                <span class="mail-icon">包邮</span>
+                                <span class="item-sell-num">月销量{{card.biz30day}}</span>
+                            </div>
+                            <button class="quan-btn" ng-click="mother.baoliDetail({{card.$index}})">
+                                <span class="quan-text-icon">领券购买</span>
+                            </button>
                         </div>
                     </li>
                 </ul>'
             ></div>
-            <ion-infinite-scroll immediate-check="false" on-infinite="darenLoadMore()" ng-if="!darenNoMoreData" icon="ion-load-d" distance="1%">
-            </ion-infinite-scroll>
         </ion-content>    
-        <div  class="scrollToTop" ng-click="scrollToTop('darenScroll')"></div>
+        <div  class="scrollToTop" ng-click="scrollToTop('baobeiScroll')"></div>
     </ion-tab>
     <ion-tab title="个人中心">
         <ion-header-bar>

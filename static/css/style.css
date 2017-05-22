@@ -135,11 +135,14 @@ ul.list {
         float: left;
         color: #999;
         text-decoration: line-through;
+        margin: 0;
         padding-right: 5px;}
     .sell-price > .item-discount-price {
+        margin: 0;
         color: #F06000;}
     .sell-price > .item-save-price {
         color: #F06000;
+        margin: 0;
         padding-left: 1px;}
     .sell-price > .mail-icon {
         float: left;
