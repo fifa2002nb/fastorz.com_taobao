@@ -62,7 +62,6 @@ interface IBaseScope extends IFastORZScope {
 fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce', '$q', '$http', '$ionicPopup', '$window', '$ionicTabsDelegate', '$stateParams', function($scope: IBaseScope, $state: angular.ui.IStateService, $timeout: angular.ITimeoutService, $sce: angular.ISCEService, $q: ng.IQService, $http: ng.IHttpService, $ionicPopup: ionic.popup.IonicPopupService, $window: angular.IWindowService, $ionicTabsDelegate: ionic.tabs.IonicTabsDelegate, $stateParams: ng.ui.IStateParamsService){
     $scope.productItems = [];
     $scope.productSearch = {searchKey: "", searching: false, searchLimit: 20, searchType: Math.round(Math.random() * 30)};
-    console.log($scope.productSearch);
     $scope.productBase = 0;
     $scope.productNoMoreData = false;
     $scope.baobeiStatus = {showDetail: false, currBaobei: null};
@@ -131,6 +130,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         $scope.deviceType = "pc";
     };
     new Clipboard('.quan-btn');
+    new Clipboard('.baobei-btn');
     
     $scope.productDoRefresh = (searching: boolean) => {
         if(!searching) {
