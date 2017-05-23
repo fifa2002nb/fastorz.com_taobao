@@ -63,12 +63,12 @@
                     <div class="item-detail">
                         <img ng-src="http:{{baobeiStatus.currBaobei.item.pictUrl}}_400x400.jpg" style="width:100%;margin-top:10px;margin-bottom:10px;"/>
                         <div class="sell-price">
-                            <span class="item-market-price">原价:<i>￥{{baobeiStatus.currBaobei.item.zkPrice}} </i></span>
-                            <span class="item-discount-price">优惠券:<i>{{baobeiStatus.currBaobei.item.couponAmount}}元 </i></span>
-                            <span class="item-save-price">返利:<i>{{baobeiStatus.currBaobei.item.tkCommFee}}元 </i></span>
+                            <span class="item-market-price">原价:<i> ￥{{baobeiStatus.currBaobei.item.zkPrice}} </i></span>
+                            <span class="item-discount-price">优惠券:<i> {{baobeiStatus.currBaobei.item.couponAmount}}元 </i></span>
+                            <span class="item-save-price">返利:<i> {{baobeiStatus.currBaobei.item.tkCommFee}}元 </i></span>
                         </div>
                         <div class="sell-price">
-                            <span class="item-discount-price">总共节省:<i>{{baobeiStatus.currBaobei.item.couponAmount + baobeiStatus.currBaobei.item.tkCommFee}}元</i></span>
+                            <span class="item-discount-price">总共节省:<i> {{baobeiStatus.currBaobei.item.totalSave}}元</i></span>
                         </div>
                         <div class="sell-price" style="margin-bottom:6px;">
                             <span class="mail-icon">包邮</span>
