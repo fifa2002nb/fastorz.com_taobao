@@ -24,7 +24,7 @@ class GLOBAL_CONFIG{
     // for offline
     static offlineRouteUrlBase: string = '/static/templates/';
     static offlineTemplateUrlBase: string = '/static/partials/';
-    static offlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
+    static offlineCMSBase: string = 'http://127.0.0.1:9000/';
     static offlineTkeymakerBase: string = 'http://www.sodeyixia.xyz:444/';
     // for now
     static nowRouteUrlBase: string = GLOBAL_CONFIG.offlineRouteUrlBase;
