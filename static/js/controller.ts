@@ -27,10 +27,10 @@ class GLOBAL_CONFIG{
     static offlineCMSBase: string = 'http://127.0.0.1:9000/';
     static offlineTkeymakerBase: string = 'http://www.sodeyixia.xyz:444/';
     // for now
-    static nowRouteUrlBase: string = GLOBAL_CONFIG.offlineRouteUrlBase;
-    static nowTemplateUrlBase: string = GLOBAL_CONFIG.offlineTemplateUrlBase;
-    static nowCMSBase: string = GLOBAL_CONFIG.offlineCMSBase;
-    static nowTkeymakerBase: string = GLOBAL_CONFIG.offlineTkeymakerBase;
+    static nowRouteUrlBase: string = GLOBAL_CONFIG.onlineRouteUrlBase;
+    static nowTemplateUrlBase: string = GLOBAL_CONFIG.onlineTemplateUrlBase;
+    static nowCMSBase: string = GLOBAL_CONFIG.onlineCMSBase;
+    static nowTkeymakerBase: string = GLOBAL_CONFIG.onlineTkeymakerBase;
 }
    
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', '$ionicConfigProvider', function($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider, $translateProvider: angular.translate.ITranslateProvider, $httpProvider: ng.IHttpProvider, $ionicConfigProvider: ionic.utility.IonicConfigProvider){
