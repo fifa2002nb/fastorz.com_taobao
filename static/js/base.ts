@@ -67,6 +67,9 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.baobeiStatus = {showDetail: false, currBaobei: null};
     $scope.baobeiItems = [];
     $scope.baobeiSearch = {query: $stateParams['keywords'], searching: false};
+    if("" == $scope.baobeiSearch.query) {
+        $scope.baobeiSearch.query = "格子衬衫";
+    }
     $scope.tmallIcon = "http://auz.qnl1.com/open/quan/images/taobao.png"
     $scope.personalData = {orders: null};       
     $scope.currUser = {openID: null, state: null, isAdmin: false, orders: null, shippedCount: -1, shippedCashes: -1, payingCount: -1, payingCashes: -1, paidCount: -1, paidCashes: -1, submitOrderNumber: null, msg: "", nickname: null, headimgurl: null, alipayAccount: null, refNicknames: null, refOpenIDs: null, refOrders: null, customerServiseUrl: null};
