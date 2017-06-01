@@ -238,18 +238,18 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     }
 
     $scope.goBaobeiDetail = () => {
+        $scope.baobeiStatus.currBaobei = null;
         $scope.baobeiStatus.showDetail = true;
         angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs").hide();
     }
     $scope.leaveBaobeiDetail = () => {
         $scope.baobeiStatus.showDetail = false;
+        $scope.baobeiStatus.currBaobei = null;
         angular.element("body > ui-view > ion-tabs > div.tab-nav.tabs").show();
     }
 
     $scope.baobeiDetail = (index: number) => {
         $scope.goBaobeiDetail();
-        $scope.baobeiStatus.showDetail = true;
-        $scope.baobeiStatus.currBaobei = null;
         var item = $scope.baobeiItems[index];
         if (null == item) {
             return;
