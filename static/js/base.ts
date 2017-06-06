@@ -226,6 +226,8 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
             .then((res: any) => {
                 if(0 == res.code) {
                     $scope.baobeiItems = res.result.pageList;
+                    $scope.baobeiSearch.query = res.result.query;
+                    $scope.baobeiSearch.timestamp = res.result.timestamp;
                     $scope.baobeiSearch.searching = false;
                 } else {
                     $scope.baobeiSearch.searching = false;
@@ -254,7 +256,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         if (null == item) {
             return;
         }
-        var data = {username: "fastorz", step: 2, auctionId: item.auctionId};
+        var data = {username: "fastorz", step: 2, auctionId: item.auctionId, query: $scope.baobeiSearch.query, timestamp: $scope.baobeiSearch.timestamp};
         $scope.resourcePusher(GLOBAL_CONFIG.nowTkeymakerBase + "v1/promotion/syn", data)
             .then((res: any) => {
                 if(0 == res.code) {
