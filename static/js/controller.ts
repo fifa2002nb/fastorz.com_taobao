@@ -19,13 +19,13 @@ class GLOBAL_CONFIG{
     // for online
     static onlineRouteUrlBase: string = '/';
     static onlineTemplateUrlBase: string = '/static/partials/';
-    static onlineCMSBase: string = 'http://www.huaibaobao.net:9000/';
-    static onlineTkeymakerBase: string = 'http://www.huaibaobao.net:444/';
+    static onlineCMSBase: string = 'http://api.huaibaobao.net:9000/';
+    static onlineTkeymakerBase: string = 'http://api.huaibaobao.net:444/';
     // for offline
     static offlineRouteUrlBase: string = '/static/templates/';
     static offlineTemplateUrlBase: string = '/static/partials/';
-    static offlineCMSBase: string = 'http://www.huaibaobao.net:9000/';
-    static offlineTkeymakerBase: string = 'http://www.huaibaobao.net:444/';
+    static offlineCMSBase: string = 'http://api.huaibaobao.net:9000/';
+    static offlineTkeymakerBase: string = 'http://api.huaibaobao.net:444/';
     // for now
     static nowRouteUrlBase: string = GLOBAL_CONFIG.offlineRouteUrlBase;
     static nowTemplateUrlBase: string = GLOBAL_CONFIG.offlineTemplateUrlBase;
