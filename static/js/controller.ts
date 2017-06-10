@@ -19,18 +19,18 @@ class GLOBAL_CONFIG{
     // for online
     static onlineRouteUrlBase: string = '/';
     static onlineTemplateUrlBase: string = '/static/partials/';
-    static onlineCMSBase: string = 'http://api.huaibaobao.net:9000/';
-    static onlineTkeymakerBase: string = 'http://api.huaibaobao.net:444/';
+    static onlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
+    static onlineTkeymakerBase: string = 'http://www.sodeyixia.xyz:444/';
     // for offline
     static offlineRouteUrlBase: string = '/static/templates/';
     static offlineTemplateUrlBase: string = '/static/partials/';
-    static offlineCMSBase: string = 'http://api.huaibaobao.net:9000/';
-    static offlineTkeymakerBase: string = 'http://api.huaibaobao.net:444/';
+    static offlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
+    static offlineTkeymakerBase: string = 'http://www.sodeyixia.xyz:444/';
     // for now
-    static nowRouteUrlBase: string = GLOBAL_CONFIG.offlineRouteUrlBase;
-    static nowTemplateUrlBase: string = GLOBAL_CONFIG.offlineTemplateUrlBase;
-    static nowCMSBase: string = GLOBAL_CONFIG.offlineCMSBase;
-    static nowTkeymakerBase: string = GLOBAL_CONFIG.offlineTkeymakerBase;
+    static nowRouteUrlBase: string = GLOBAL_CONFIG.onlineRouteUrlBase;
+    static nowTemplateUrlBase: string = GLOBAL_CONFIG.onlineTemplateUrlBase;
+    static nowCMSBase: string = GLOBAL_CONFIG.onlineCMSBase;
+    static nowTkeymakerBase: string = GLOBAL_CONFIG.onlineTkeymakerBase;
 }
    
 fastorz.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$translateProvider', '$httpProvider', '$ionicConfigProvider', function($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $locationProvider: ng.ILocationProvider, $translateProvider: angular.translate.ITranslateProvider, $httpProvider: ng.IHttpProvider, $ionicConfigProvider: ionic.utility.IonicConfigProvider){
