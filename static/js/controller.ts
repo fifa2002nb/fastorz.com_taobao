@@ -19,13 +19,13 @@ class GLOBAL_CONFIG{
     // for online
     static onlineRouteUrlBase: string = '/';
     static onlineTemplateUrlBase: string = '/static/partials/';
-    static onlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
-    static onlineTkeymakerBase: string = 'http://www.sodeyixia.xyz:444/';
+    static onlineCMSBase: string = 'http://www.xyz:9000/';
+    static onlineTkeymakerBase: string = 'http://www.xyz:444/';
     // for offline
     static offlineRouteUrlBase: string = '/static/templates/';
     static offlineTemplateUrlBase: string = '/static/partials/';
-    static offlineCMSBase: string = 'http://www.sodeyixia.xyz:9000/';
-    static offlineTkeymakerBase: string = 'http://www.sodeyixia.xyz:444/';
+    static offlineCMSBase: string = 'http://www.xyz:9000/';
+    static offlineTkeymakerBase: string = 'http://www.xyz:444/';
     // for now
     static nowRouteUrlBase: string = GLOBAL_CONFIG.onlineRouteUrlBase;
     static nowTemplateUrlBase: string = GLOBAL_CONFIG.onlineTemplateUrlBase;
