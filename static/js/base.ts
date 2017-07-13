@@ -185,7 +185,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.baobeiShowPopup = (quan: string, taokey: boolean) => {
         if(taokey) {
             var myPopup = $ionicPopup.show({
-                template: '<div style="font-size:16px;text-align:center;">请打开【手机淘宝APP】领券下单。</div>',
+                template: '<div style="font-size:16px;text-align:center;">请打开【手机淘宝】领券下单。</div>',
                 title: '已复制淘口令',
                 scope: $scope,
                 buttons: [
@@ -203,7 +203,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
     $scope.productShowPopup = (quan: string) => {
         if("pc" != $scope.deviceType) {
             var myPopup = $ionicPopup.show({
-                template: '<div style="font-size:16px;text-align:center;">请打开【手机淘宝APP】领券下单。</div>',
+                template: '<div style="font-size:16px;text-align:center;">请打开【手机淘宝】领券下单。</div>',
                 title: '已复制淘口令',
                 scope: $scope,
                 buttons: [
@@ -357,7 +357,7 @@ fastorzControllers.controller('BaseCtrl', ['$scope', '$state', '$timeout', '$sce
         var otherErrHint = "其他错误。";
         var serverErrHint = "服务器故障。";
         var myPopup = $ionicPopup.show({
-            template: '<div style="font-size:16px;text-align:center;">请在此输入【淘宝APP】下单后的购物订单号。订单号样例：10157050315078885。</div><br/><input type="text" ng-model="currUser.submitOrderNumber" style="text-align: center;"><br/><div style="font-size:16px;text-align:center;color:#eb4e53;">{{currUser.msg}}</div>', 
+            template: '<div style="font-size:16px;text-align:center;">请在此输入【手机淘宝】下单后的购物订单号。订单号样例：10157050315078885。</div><br/><input type="text" ng-model="currUser.submitOrderNumber" style="text-align: center;"><br/><div style="font-size:16px;text-align:center;color:#eb4e53;">{{currUser.msg}}</div>', 
             title: '淘宝订单登记',
             scope: $scope,
             buttons: [
